@@ -65,5 +65,6 @@ public class AccessorsTest {
 		FloorSensor fs = new FloorSensor() {};
 		sut.setFloorSensor(0, fs);
 		assertEquals(fs, sut.getFloorSensor(0));
+		assertEquals(null, sut.getFloorSensor(1000));
 	}
 }
