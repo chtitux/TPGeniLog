@@ -76,7 +76,7 @@ public class AccessorsTest {
 		};
 		sut.setCabinButton(0, b);
 		assertEquals(b, sut.getCabinButton(0));
-		//assertEquals(null, sut.getCabinButton(1000));
+		assertEquals(null, sut.getCabinButton(1000));
 	}
 	
 }
