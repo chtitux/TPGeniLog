@@ -41,8 +41,7 @@ public class ElevatorControllerImpl implements ElevatorController {
 
 	@Override
 	public void request(Button sender, Integer floor) {
-		// TODO Auto-generated method stub
-
+		this.door.openDoors();
 	}
 
 	@Override
