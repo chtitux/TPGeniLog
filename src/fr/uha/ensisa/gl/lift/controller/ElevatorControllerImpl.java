@@ -17,6 +17,10 @@ public class ElevatorControllerImpl implements ElevatorController {
 	private Timer timer;
 	private ArrayList<FloorSensor> floorSensors;
 
+	public ElevatorControllerImpl() {
+		this.floorSensors = new ArrayList<FloorSensor>();
+	}
+	
 	@Override
 	public void doorOpened(Door sender) {
 		// TODO Auto-generated method stub
