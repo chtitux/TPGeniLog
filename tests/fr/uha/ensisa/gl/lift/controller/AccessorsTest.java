@@ -65,5 +65,18 @@ public class AccessorsTest {
 		FloorSensor fs = new FloorSensor() {};
 		sut.setFloorSensor(0, fs);
 		assertEquals(fs, sut.getFloorSensor(0));
+		assertEquals(null, sut.getFloorSensor(1000));
 	}
+	
+	@Test public void cabinButtonAccessor() {
+		ElevatorControllerImpl sut = new ElevatorControllerImpl();
+		Button b = new Button() {
+			public void requestServiced() { }
+			public void requestACK() { }
+		};
+		sut.setCabinButton(0, b);
+		assertEquals(b, sut.getCabinButton(0));
+		//assertEquals(null, sut.getCabinButton(1000));
+	}
+	
 }
