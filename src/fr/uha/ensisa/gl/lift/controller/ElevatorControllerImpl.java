@@ -17,10 +17,12 @@ public class ElevatorControllerImpl implements ElevatorController {
 	private Timer timer;
 	private ArrayList<FloorSensor> floorSensors;
 	private ArrayList<Button> cabinButtons;
+	private ArrayList<Button> floorButtons;
 
 	public ElevatorControllerImpl() {
 		this.floorSensors = new ArrayList<FloorSensor>();
 		this.cabinButtons = new ArrayList<Button>();
+		this.floorButtons = new ArrayList<Button>();
 	}
 	
 	@Override
@@ -94,8 +96,10 @@ public class ElevatorControllerImpl implements ElevatorController {
 
 	@Override
 	public Button getFloorButton(int floor) {
-		// TODO Auto-generated method stub
-		return null;
+		if(floor >= this.floorButtons.size())
+			return null;
+		else
+			return this.floorButtons.get(floor);
 	}
 
 	@Override
@@ -108,8 +112,10 @@ public class ElevatorControllerImpl implements ElevatorController {
 
 	@Override
 	public void setFloorButton(int floor, Button button) {
-		// TODO Auto-generated method stub
-
+		for (int i = this.floorButtons.size(); i<=floor; i++)
+			this.floorButtons.add(null);
+		
+		this.floorButtons.set(floor, button);
 	}
 
 	@Override
