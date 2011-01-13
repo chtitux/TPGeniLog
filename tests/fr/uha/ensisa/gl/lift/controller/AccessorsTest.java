@@ -17,7 +17,6 @@ public class AccessorsTest {
 	@Test public void doorAccessor() {
 		ElevatorControllerImpl sut = new ElevatorControllerImpl();
 		Door d = new Door() {
-
 			@Override
 			public void openDoors() {
 			}
@@ -27,5 +26,24 @@ public class AccessorsTest {
 			}};
 		sut.setDoor(d);
 		assertEquals(d, sut.getDoor());
+	}
+	
+	@Test public void motorAccessor() {
+		ElevatorControllerImpl sut = new ElevatorControllerImpl();
+		Motor m = new Motor() {
+			@Override
+			public void goUp() {
+			}
+
+			@Override
+			public void goDown() {
+			}
+
+			@Override
+			public void stopMove() {
+			}
+};
+		sut.setMotor(m);
+		assertEquals(m, sut.getMotor());
 	}
 }

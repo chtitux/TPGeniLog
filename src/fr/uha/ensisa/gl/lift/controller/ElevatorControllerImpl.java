@@ -11,6 +11,7 @@ import fr.ensisa.uha.ff.gl.lift.hard.QueryableMotor.MotorStatus;
 public class ElevatorControllerImpl implements ElevatorController {
 
 	private Door door;
+	private Motor motor;
 
 	@Override
 	public void doorOpened(Door sender) {
@@ -66,14 +67,12 @@ public class ElevatorControllerImpl implements ElevatorController {
 
 	@Override
 	public Motor getMotor() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.motor;
 	}
 
 	@Override
 	public void setMotor(Motor motor) {
-		// TODO Auto-generated method stub
-
+		this.motor = motor;
 	}
 
 	@Override
