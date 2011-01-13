@@ -79,4 +79,14 @@ public class AccessorsTest {
 		assertEquals(null, sut.getCabinButton(1000));
 	}
 	
+	@Test public void floorButtonAccessor() {
+		ElevatorControllerImpl sut = new ElevatorControllerImpl();
+		Button b = new Button() {
+			public void requestServiced() { }
+			public void requestACK() { }
+		};
+		sut.setFloorButton(0, b);
+		assertEquals(b, sut.getFloorButton(0));
+		assertEquals(null, sut.getFloorButton(1000));
+	}
 }
