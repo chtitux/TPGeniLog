@@ -1,5 +1,7 @@
 package fr.uha.ensisa.gl.lift.controller;
 
+import java.util.ArrayList;
+
 import fr.ensisa.uha.ff.gl.lift.hard.Button;
 import fr.ensisa.uha.ff.gl.lift.hard.Door;
 import fr.ensisa.uha.ff.gl.lift.hard.ElevatorController;
@@ -13,17 +15,18 @@ public class ElevatorControllerImpl implements ElevatorController {
 	private Door door;
 	private Motor motor;
 	private Timer timer;
+	private ArrayList<FloorSensor> floorSensors;
 
 	@Override
 	public void doorOpened(Door sender) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public void doorClosed(Door Sender) {
+	public void doorClosed(Door sender) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -102,14 +105,18 @@ public class ElevatorControllerImpl implements ElevatorController {
 
 	@Override
 	public FloorSensor getFloorSensor(int floor) {
-		// TODO Auto-generated method stub
-		return null;
+		if (floor >= this.floorSensors.size())
+			return null;
+		else
+			return this.floorSensors.get(floor);
 	}
 
 	@Override
 	public void setFloorSensor(int floor, FloorSensor sensor) {
-		// TODO Auto-generated method stub
-
+		for (int i = this.floorSensors.size(); i<=floor; i++)
+			this.floorSensors.add(null);
+		
+		this.floorSensors.set(floor, sensor);
 	}
 
 	@Override

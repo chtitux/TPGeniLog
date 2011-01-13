@@ -59,4 +59,11 @@ public class AccessorsTest {
 		sut.setTimer(t);
 		assertEquals(t, sut.getTimer());
 	}
+	
+	@Test public void floorSensorAccessor() {
+		ElevatorControllerImpl sut = new ElevatorControllerImpl();
+		FloorSensor fs = new FloorSensor() {};
+		sut.setFloorSensor(0, fs);
+		assertEquals(fs, sut.getFloorSensor(0));
+	}
 }
