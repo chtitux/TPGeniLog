@@ -41,9 +41,22 @@ public class AccessorsTest {
 
 			@Override
 			public void stopMove() {
-			}
-};
+			}};
 		sut.setMotor(m);
 		assertEquals(m, sut.getMotor());
+	}
+	
+	@Test public void timerAccessor() {
+		ElevatorControllerImpl sut = new ElevatorControllerImpl();
+		Timer t = new Timer() {
+			@Override
+			public void countdown(int ms) {
+			}
+
+			@Override
+			public void cancel() {
+			}};
+		sut.setTimer(t);
+		assertEquals(t, sut.getTimer());
 	}
 }

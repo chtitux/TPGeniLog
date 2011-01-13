@@ -12,6 +12,7 @@ public class ElevatorControllerImpl implements ElevatorController {
 
 	private Door door;
 	private Motor motor;
+	private Timer timer;
 
 	@Override
 	public void doorOpened(Door sender) {
@@ -113,14 +114,12 @@ public class ElevatorControllerImpl implements ElevatorController {
 
 	@Override
 	public Timer getTimer() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.timer;
 	}
 
 	@Override
 	public void setTimer(Timer t) {
-		// TODO Auto-generated method stub
-
+		this.timer = t;
 	}
 
 }
