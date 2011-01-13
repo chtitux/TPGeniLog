@@ -6,11 +6,9 @@ import org.junit.Test;
 
 import fr.ensisa.uha.ff.gl.lift.hard.Button;
 import fr.ensisa.uha.ff.gl.lift.hard.Door;
-import fr.ensisa.uha.ff.gl.lift.hard.ElevatorController;
 import fr.ensisa.uha.ff.gl.lift.hard.FloorSensor;
 import fr.ensisa.uha.ff.gl.lift.hard.Motor;
 import fr.ensisa.uha.ff.gl.lift.hard.Timer;
-import fr.ensisa.uha.ff.gl.lift.hard.QueryableMotor.MotorStatus;
 
 
 public class AccessorsTest {
