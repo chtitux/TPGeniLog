@@ -15,7 +15,7 @@ public class CabinAtFloor__58_ca_15_ extends TestCase {
 	private AdapterInterface adapter;
 	
 	public void setUp() throws Exception {
-		adapter = AdapterFactory.getForSuite("fr_uha_ensisa_ff_gl_lift_soft_model", "ElevatorController");
+		adapter = AdapterFactory.getForSuite("fr.uha.ensisa.gl.lift.controller.generatedTests", "ElevatorController");
 	}
 	
 	public void testCabinAtFloor__58_ca_15_() throws Exception {
