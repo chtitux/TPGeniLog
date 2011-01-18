@@ -27,8 +27,7 @@ public class ElevatorControllerImpl implements ElevatorController {
 	
 	@Override
 	public void doorOpened(Door sender) {
-		// TODO Auto-generated method stub
-		
+		this.getTimer().countdown(5000);
 	}
 
 	@Override
