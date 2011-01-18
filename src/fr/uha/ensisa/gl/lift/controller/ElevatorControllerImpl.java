@@ -9,8 +9,9 @@ import fr.ensisa.uha.ff.gl.lift.hard.FloorSensor;
 import fr.ensisa.uha.ff.gl.lift.hard.Motor;
 import fr.ensisa.uha.ff.gl.lift.hard.Timer;
 import fr.ensisa.uha.ff.gl.lift.hard.QueryableMotor.MotorStatus;
+import fr.ensisa.uha.ff.gl.lift.hard.TimerListener;
 
-public class ElevatorControllerImpl implements ElevatorController {
+public class ElevatorControllerImpl implements ElevatorController, TimerListener {
 
 	private Door door;
 	private Motor motor;
