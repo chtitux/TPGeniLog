@@ -1,7 +1,7 @@
 package fr.uha.ensisa.gl.lift.controller.generatedTests;
 
 public class AdapterFactory{
-    private static final String ADAPTER_IMPLEMENTATION = "AdapterImplementation";
+    private static final String ADAPTER_IMPLEMENTATION = "AdapterImpl";
 
     public static AdapterInterface getForSuite(final String projectName, final String suiteName) {
         final ClassLoader classloader = AdapterFactory.class.getClassLoader();
