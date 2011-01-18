@@ -9,11 +9,6 @@ public class RequestTest extends CabinAtFloorTestsEM {
 	}
 	
 	@Test public void request0OpenClose() {
-		try {
-			this.zeroPressedOpenClose();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		this.zeroPressedOpenClose();
 	}
-	
 }
