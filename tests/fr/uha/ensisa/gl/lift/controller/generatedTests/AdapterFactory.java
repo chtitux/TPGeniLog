@@ -1,4 +1,4 @@
-package fr_uha_ensisa_ff_gl_lift_soft_model;
+package fr.uha.ensisa.gl.lift.controller.generatedTests;
 
 public class AdapterFactory{
     private static final String ADAPTER_IMPLEMENTATION = "AdapterImplementation";

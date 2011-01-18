@@ -1,12 +1,12 @@
-package fr_uha_ensisa_ff_gl_lift_soft_model.ElevatorController;
+package fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController;
 
 import junit.framework.TestCase;
-import fr_uha_ensisa_ff_gl_lift_soft_model.AdapterInterface;
-import fr_uha_ensisa_ff_gl_lift_soft_model.AdapterFactory;
-import fr_uha_ensisa_ff_gl_lift_soft_model.States;
+import fr.uha.ensisa.gl.lift.controller.generatedTests.AdapterInterface;
+import fr.uha.ensisa.gl.lift.controller.generatedTests.AdapterFactory;
+import fr.uha.ensisa.gl.lift.controller.generatedTests.States;
 
-import static fr_uha_ensisa_ff_gl_lift_soft_model.Enumerations.*;
-import static fr_uha_ensisa_ff_gl_lift_soft_model.ElevatorController.InstancesDefinition.*;
+import static fr.uha.ensisa.gl.lift.controller.generatedTests.Enumerations.*;
+import static fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.*;
 /*
 REQUIREMENTS:
 */

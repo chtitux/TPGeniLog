@@ -1,6 +1,6 @@
-package fr_uha_ensisa_ff_gl_lift_soft_model.ElevatorController;
+package fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController;
 
-import fr_uha_ensisa_ff_gl_lift_soft_model.InstancesDeclaration;
+import fr.uha.ensisa.gl.lift.controller.generatedTests.InstancesDeclaration;
 
 public interface InstancesDefinition {
 	
