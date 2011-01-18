@@ -15,7 +15,7 @@ public class Request__58_6a_ee_ extends TestCase {
 	private AdapterInterface adapter;
 	
 	public void setUp() throws Exception {
-		adapter = AdapterFactory.getForSuite("fr_uha_ensisa_ff_gl_lift_soft_model", "ElevatorController");
+		adapter = AdapterFactory.getForSuite("fr.uha.ensisa.gl.lift.controller.generatedTests", "ElevatorController");
 	}
 	
 	public void testRequest__58_6a_ee_() throws Exception {

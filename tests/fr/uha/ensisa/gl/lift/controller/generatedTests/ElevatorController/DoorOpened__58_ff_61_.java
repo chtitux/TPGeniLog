@@ -15,7 +15,7 @@ public class DoorOpened__58_ff_61_ extends TestCase {
 	private AdapterInterface adapter;
 	
 	public void setUp() throws Exception {
-		adapter = AdapterFactory.getForSuite("fr_uha_ensisa_ff_gl_lift_soft_model", "ElevatorController");
+		adapter = AdapterFactory.getForSuite("fr.uha.ensisa.gl.lift.controller.generatedTests", "ElevatorController");
 	}
 	
 	public void testDoorOpened__58_ff_61_() throws Exception {
