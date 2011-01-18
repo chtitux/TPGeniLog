@@ -30,7 +30,6 @@ public class ElevatorControllerImpl implements ElevatorController, TimerListener
 	@Override
 	public void doorOpened(Door sender) {
 		this.getTimer().countdown(5000);
-		sender.closeDoors();
 	}
 
 	@Override
