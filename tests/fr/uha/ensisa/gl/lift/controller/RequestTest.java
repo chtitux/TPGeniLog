@@ -8,5 +8,12 @@ public class RequestTest extends CabinAtFloorTestsEM {
 		this.zeroPressed();
 	}
 	
+	@Test public void request0OpenClose() {
+		try {
+			this.zeroPressedOpenClose();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 	
 }

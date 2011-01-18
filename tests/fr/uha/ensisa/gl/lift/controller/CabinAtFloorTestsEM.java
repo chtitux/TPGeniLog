@@ -34,4 +34,23 @@ public class CabinAtFloorTestsEM {
 		this.sut.request(cb0, 0);
 		verify(this.door);
 	}
+	
+	@Test public void zeroPressedOpenClose() throws InterruptedException {
+		this.door.openDoors();
+		replay(this.door);
+		this.sut.request(cb0, 0);
+		verify(this.door);
+		reset(this.door);
+		
+		replay(this.door);
+		this.sut.doorOpened(this.door);
+		verify(this.door);
+		reset(this.door);
+		
+		this.door.closeDoors();
+		replay(this.door);
+		Thread.sleep(5100);
+		verify(this.door);
+	}
+	
 }
