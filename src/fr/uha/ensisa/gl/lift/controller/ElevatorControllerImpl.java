@@ -28,7 +28,6 @@ public class ElevatorControllerImpl implements ElevatorController {
 	@Override
 	public void doorOpened(Door sender) {
 		this.getTimer().countdown(5000);
-		sender.closeDoors();
 	}
 
 	@Override
@@ -62,8 +61,8 @@ public class ElevatorControllerImpl implements ElevatorController {
 
 	@Override
 	public void timeout(Timer timer) {
-		// TODO Auto-generated method stub
-
+		this.door.closeDoors();
+		timer.cancel();
 	}
 
 	@Override
