@@ -1,7 +1,7 @@
-package fr_uha_ensisa_ff_gl_lift_soft_model;
+package fr.uha.ensisa.gl.lift.controller.generatedTests;
 
-import static fr_uha_ensisa_ff_gl_lift_soft_model.InstancesDeclaration.*;
-import static fr_uha_ensisa_ff_gl_lift_soft_model.Enumerations.*;
+import static fr.uha.ensisa.gl.lift.controller.generatedTests.InstancesDeclaration.*;
+import static fr.uha.ensisa.gl.lift.controller.generatedTests.Enumerations.*;
 
 public interface AdapterInterface {
 	

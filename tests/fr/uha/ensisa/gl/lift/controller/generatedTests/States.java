@@ -1,4 +1,4 @@
-package fr_uha_ensisa_ff_gl_lift_soft_model;
+package fr.uha.ensisa.gl.lift.controller.generatedTests;
 
 public enum States {
 Running__DoorOpened__Closing,
