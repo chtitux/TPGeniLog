@@ -6,6 +6,7 @@ import org.junit.Test;
 import fr.ensisa.uha.ff.gl.lift.hard.Button;
 import fr.ensisa.uha.ff.gl.lift.hard.Door;
 import fr.ensisa.uha.ff.gl.lift.hard.FloorSensor;
+import fr.ensisa.uha.ff.gl.lift.hard.Timer;
 import static org.easymock.EasyMock.*;
 
 public class CabinAtFloorTestsEM {
@@ -14,6 +15,7 @@ public class CabinAtFloorTestsEM {
 	public Button cb0 = createMock(Button.class);
 	public Button fb0 = createMock(Button.class);
 	public FloorSensor fs0 = createMock(FloorSensor.class);
+	public Timer timer = createMock(Timer.class);
 	
 	@Before public void createSut() {
 		this.sut = new ElevatorControllerImpl();
@@ -22,10 +24,14 @@ public class CabinAtFloorTestsEM {
 		this.sut.setFloorButton(0, fb0);
 		this.sut.setFloorSensor(0, fs0);
 		
+		this.sut.setTimer(timer);
+		
 		reset(door);
 		reset(cb0);
 		reset(fb0);
 		reset(fs0);
+		
+		reset(timer);
 	}
 	
 	@Test public void zeroPressed() {
