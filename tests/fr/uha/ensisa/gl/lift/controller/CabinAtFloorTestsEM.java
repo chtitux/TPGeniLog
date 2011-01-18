@@ -1,6 +1,7 @@
 package fr.uha.ensisa.gl.lift.controller;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import fr.ensisa.uha.ff.gl.lift.hard.Button;
 import fr.ensisa.uha.ff.gl.lift.hard.Door;
@@ -25,5 +26,12 @@ public class CabinAtFloorTestsEM {
 		reset(cb0);
 		reset(fb0);
 		reset(fs0);
+	}
+	
+	@Test public void zeroPressed() {
+		this.door.openDoors();
+		replay(this.door);
+		this.sut.request(cb0, 0);
+		verify(this.door);
 	}
 }
