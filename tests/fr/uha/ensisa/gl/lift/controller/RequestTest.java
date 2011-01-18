@@ -11,4 +11,5 @@ public class RequestTest extends CabinAtFloorTestsEM {
 	@Test public void request0OpenClose() {
 		this.zeroPressedOpenClose();
 	}
+	
 }

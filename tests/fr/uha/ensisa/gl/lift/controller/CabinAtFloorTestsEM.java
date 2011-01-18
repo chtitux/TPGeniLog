@@ -30,7 +30,6 @@ public class CabinAtFloorTestsEM {
 		reset(cb0);
 		reset(fb0);
 		reset(fs0);
-		
 		reset(timer);
 	}
 	
@@ -58,6 +57,4 @@ public class CabinAtFloorTestsEM {
 		this.sut.timeout(timer);
 		verify(this.door);
 	}
-
-	
 }
