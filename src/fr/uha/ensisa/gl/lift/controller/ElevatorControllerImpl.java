@@ -26,22 +26,25 @@ public class ElevatorControllerImpl
 	private ArrayList<Button> floorButtons;
 	private Integer currentFloor;
 	private Integer requestedFloor;
-
+	private boolean doorClosed;
+	
 	public ElevatorControllerImpl() {
 		this.floorSensors = new ArrayList<FloorSensor>();
 		this.cabinButtons = new ArrayList<Button>();
 		this.floorButtons = new ArrayList<Button>();
 		this.currentFloor = 0; // l'ascenceur est construit à l'étage 0
+		this.doorClosed = true;
 	}
 	
 	@Override
 	public void doorOpened(Door sender) {
 		this.getTimer().countdown(5000);
+		this.doorClosed = false;
 	}
 
 	@Override
 	public void doorClosed(Door sender) {
-		// TODO Auto-generated method stub
+		this.doorClosed = true;
 	}
 
 	@Override
@@ -59,9 +62,9 @@ public class ElevatorControllerImpl
 			this.door.openDoors();
 		} else {
 			this.door.closeDoors();
-			// FIXME : tester si les portes sont bien fermées
-
-			// Sinon, on doit bouger la cabine
+			// Si les portes sont encore ouvertes => probleme
+			if(this.doorClosed == false) return;
+			
 			if(this.currentFloor.compareTo(this.requestedFloor) < 0) {
 				// L'étage actuel est plus petit que demandé, il faut monter
 				this.motor.goUp();
