@@ -24,13 +24,14 @@ public class ElevatorControllerImpl
 	private ArrayList<FloorSensor> floorSensors;
 	private ArrayList<Button> cabinButtons;
 	private ArrayList<Button> floorButtons;
-	private Integer floor;
+	private Integer currentFloor;
+	private Integer requestedFloor;
 
 	public ElevatorControllerImpl() {
 		this.floorSensors = new ArrayList<FloorSensor>();
 		this.cabinButtons = new ArrayList<Button>();
 		this.floorButtons = new ArrayList<Button>();
-		this.floor = 0; // l'ascenceur est construit à l'étage 0
+		this.currentFloor = 0; // l'ascenceur est construit à l'étage 0
 	}
 	
 	@Override
@@ -51,18 +52,25 @@ public class ElevatorControllerImpl
 
 	@Override
 	public void request(Button sender, Integer floor) {
-		// Si la cabine est au bon étage, on ouvre la porte
-		if(floor.equals(this.floor)) {
+		this.requestedFloor = floor;
+		// Si l'étage demandé est l'étage actuel, on ouvre la porte
+		if(this.currentFloor.equals(this.requestedFloor)) {
 			this.door.openDoors();
 		} else {
-			// On doit bouger la cabine
-			
+			// Sinon, on doit bouger la cabine
+			if(this.currentFloor.compareTo(this.requestedFloor) < 0) {
+				// L'étage actuel est plus petit que demandé, il faut monter
+				// FIXME : tester si les portes sont bien fermées
+				this.motor.goUp();
+			} else { // Il faut descendre
+				this.motor.goDown();
+			}
 		}
 	}
 
 	@Override
 	public void cabinAtFloor(FloorSensor sender, Integer floor) {
-		this.floor = floor;
+		this.currentFloor = floor;
 	}
 
 	@Override
