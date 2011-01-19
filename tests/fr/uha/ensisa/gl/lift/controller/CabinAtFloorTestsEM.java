@@ -49,7 +49,6 @@ public class CabinAtFloorTestsEM {
 		
 		replay(this.door);
 		this.sut.doorOpened(this.door);
-		this.sut.timeout(timer);
 		verify(this.door);
 		reset(this.door);
 		
