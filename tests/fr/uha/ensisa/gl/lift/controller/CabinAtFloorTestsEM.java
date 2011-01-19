@@ -83,6 +83,8 @@ public class CabinAtFloorTestsEM {
 		this.fb0.requestServiced();	// 
 		
 		this.cb1.requestACK();		// Appui sur le bouton "etage 1"
+		this.cb1.requestACK();		// Appui 2eme fois sur le bouton "etage 1"
+
 		this.door.closeDoors();		// Fermeture des portes
 		this.motor.goUp();			// Mise en route du moteur
 		this.motor.stopMove();		// Arret du moteur
@@ -96,7 +98,7 @@ public class CabinAtFloorTestsEM {
 		
 		this.sut.request(fb0, 0);
 		this.sut.request(this.cb1, 1);
-		assert(this.sut.isDoorClosed());
+		this.sut.request(this.cb1, 1);
 		this.sut.cabinAtFloor(fs1, 1);
 		
 		verify(this.motor);

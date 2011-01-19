@@ -24,16 +24,18 @@ public class ElevatorControllerImpl
 	private ArrayList<FloorSensor> floorSensors;
 	private ArrayList<Button> cabinButtons;
 	private ArrayList<Button> floorButtons;
-	private Integer currentFloor;
+	private Integer lastFloor;
 	private Integer requestedFloor;
 	private boolean doorClosed;
+	private boolean isMoving;
 	
 	public ElevatorControllerImpl() {
 		this.floorSensors = new ArrayList<FloorSensor>();
 		this.cabinButtons = new ArrayList<Button>();
 		this.floorButtons = new ArrayList<Button>();
-		this.currentFloor = 0; // l'ascenceur est construit à l'étage 0
+		this.lastFloor = 0; // l'ascenceur est construit à l'étage 0
 		this.doorClosed = true;
+		this.isMoving = false;
 	}
 	
 	@Override
@@ -58,8 +60,9 @@ public class ElevatorControllerImpl
 		this.requestedFloor = floor;
 		sender.requestACK();
 		
-		// Si l'étage demandé est l'étage actuel, on ouvre la porte
-		if(this.currentFloor.equals(this.requestedFloor)) {
+		// Si l'ascenceur est à l'arrêt et
+		// que le dernier étage atteint est l'étage demandé, on ouvre la porte
+		if(this.isMoving == false && this.lastFloor.equals(this.requestedFloor)) {
 			this.door.openDoors();
 			sender.requestServiced();
 		} else {
@@ -68,7 +71,7 @@ public class ElevatorControllerImpl
 			if(this.doorClosed == false)
 				return;
 			
-			if(this.currentFloor.compareTo(this.requestedFloor) < 0) {
+			if(this.lastFloor.compareTo(this.requestedFloor) < 0) {
 				// L'étage actuel est plus petit que demandé, il faut monter
 				this.motor.goUp();
 			} else { // Sinon, il faut descendre
@@ -79,14 +82,14 @@ public class ElevatorControllerImpl
 
 	@Override
 	public void cabinAtFloor(FloorSensor sender, Integer floor) {
-		this.currentFloor = floor;
+		this.lastFloor = floor;
 		
-		if(this.currentFloor.equals(this.requestedFloor)) {
+		if(this.lastFloor.equals(this.requestedFloor)) {
 			// La cabine est à l'étage demandé, on s'arrête
 			this.motor.stopMove();
 			this.door.openDoors();
-			this.cabinButtons.get(this.currentFloor).requestServiced();
-			this.floorButtons.get(this.currentFloor).requestServiced();
+			this.cabinButtons.get(this.lastFloor).requestServiced();
+			this.floorButtons.get(this.lastFloor).requestServiced();
 		}
 	}
 
