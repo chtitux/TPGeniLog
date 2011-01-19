@@ -179,5 +179,9 @@ public class ElevatorControllerImpl
 	public void setTimer(Timer t) {
 		this.timer = t;
 	}
+	
+	public boolean isDoorClosed() {
+		return doorClosed;
+	}
 
 }
