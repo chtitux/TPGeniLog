@@ -92,11 +92,17 @@ public class AdapterImpl implements AdapterInterface {
 	}
 
 	@Override
-	public void ElevatorControllercabinLeftFloor(
-			ElevatorController ltd_receiverInstance, Floor floor)
-			throws Exception {
-		// TODO Auto-generated method stub
+	public void ElevatorControllercabinLeftFloor(ElevatorController ltd_receiverInstance, Floor floor) throws Exception {
+		int floorNum;
+		if (floor == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Floor._0)
+			floorNum = 0;
+		else if (floor == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Floor._1)
+			floorNum = 1;
+		else
+			floorNum = 2;
 		
+		this.createSut();
+		this.sut.cabinLeftFloor(this.sut.getFloorSensor(floorNum), floorNum);
 	}
 
 	@Override
