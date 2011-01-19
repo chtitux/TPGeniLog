@@ -20,6 +20,7 @@ public class ElevatorControllerImpl implements ElevatorController, TimerListener
 	private ArrayList<FloorSensor> floorSensors;
 	private ArrayList<Button> cabinButtons;
 	private ArrayList<Button> floorButtons;
+	private Integer floor;
 
 	public ElevatorControllerImpl() {
 		this.floorSensors = new ArrayList<FloorSensor>();
@@ -36,6 +37,7 @@ public class ElevatorControllerImpl implements ElevatorController, TimerListener
 	public void doorClosed(Door sender) {
 		// TODO Auto-generated method stub
 		
+		
 	}
 
 	@Override
@@ -51,7 +53,7 @@ public class ElevatorControllerImpl implements ElevatorController, TimerListener
 
 	@Override
 	public void cabinAtFloor(FloorSensor sender, Integer floor) {
-		// TODO Auto-generated method stub
+		this.floor = floor;
 
 	}
 
