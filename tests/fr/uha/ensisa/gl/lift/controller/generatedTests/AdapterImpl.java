@@ -1,12 +1,19 @@
 package fr.uha.ensisa.gl.lift.controller.generatedTests;
 
 import static org.easymock.EasyMock.*;
+import static org.junit.Assert.*;
 
 import fr.ensisa.uha.ff.gl.lift.hard.Button;
 import fr.ensisa.uha.ff.gl.lift.hard.Door;
 import fr.ensisa.uha.ff.gl.lift.hard.FloorSensor;
 import fr.ensisa.uha.ff.gl.lift.hard.Motor;
 import fr.ensisa.uha.ff.gl.lift.hard.Timer;
+import fr.uha.ensisa.gl.lift.controller.bouchons.Bouchon;
+import fr.uha.ensisa.gl.lift.controller.bouchons.ButtonBouchon;
+import fr.uha.ensisa.gl.lift.controller.bouchons.DoorBouchon;
+import fr.uha.ensisa.gl.lift.controller.bouchons.FloorSensorBouchon;
+import fr.uha.ensisa.gl.lift.controller.bouchons.MotorBouchon;
+import fr.uha.ensisa.gl.lift.controller.bouchons.TimerBouchon;
 import fr.uha.ensisa.gl.lift.controller.generatedTests.Enumerations.Messages;
 import fr.uha.ensisa.gl.lift.controller.generatedTests.Enumerations.MotorStatus;
 import fr.uha.ensisa.gl.lift.controller.generatedTests.InstancesDeclaration.Actor;
@@ -33,6 +40,7 @@ public class AdapterImpl implements AdapterInterface {
 	private FloorSensor fs2;
 	
 	public AdapterImpl() {
+		/*
 		this.door = createMock(Door.class);
 		this.timer = createMock(Timer.class);
 		this.motor = createMock(Motor.class);
@@ -49,6 +57,24 @@ public class AdapterImpl implements AdapterInterface {
 		this.cb2 = createMock(Button.class);
 		this.fb2 = createMock(Button.class);
 		this.fs2 = createMock(FloorSensor.class);
+		*/
+		
+		this.door = new DoorBouchon();
+		this.timer = new TimerBouchon();
+		this.motor = new MotorBouchon();
+		
+		// Étage 0
+		this.cb0 = new ButtonBouchon();
+		this.fb0 = new ButtonBouchon();
+		this.fs0 = new FloorSensorBouchon();
+		// Étage 1
+		this.cb1 = new ButtonBouchon();
+		this.fb1 = new ButtonBouchon();
+		this.fs1 = new FloorSensorBouchon();
+		// Étage 2
+		this.cb2 = new ButtonBouchon();
+		this.fb2 = new ButtonBouchon();
+		this.fs2 = new FloorSensorBouchon();
 		
 		//Création du système
 		this.createSut();
@@ -74,6 +100,7 @@ public class AdapterImpl implements AdapterInterface {
 		this.sut.setFloorSensor(2, fs2);
 
 		
+		/*
 		reset(door);
 		reset(timer);
 		reset(motor);
@@ -86,11 +113,12 @@ public class AdapterImpl implements AdapterInterface {
 		reset(cb2);
 		reset(fb2);
 		reset(fs2);
+		*/
 	}
 	
 	@Override
 	public void ActorgetLastSentMessage(Actor ltd_receiverInstance, Messages message) throws Exception {
-		
+		assertTrue((message==getObjectFromActor(ltd_receiverInstance).getLastSentMessage()));
 	}
 
 	@Override
@@ -150,26 +178,26 @@ public class AdapterImpl implements AdapterInterface {
 		//Pas besoin dans notre cas
 	}
 	
-	private Object getObjectFromActor(Actor sender)	{
-		Object actor = null;
+	private Bouchon getObjectFromActor(Actor sender)	{
+		Bouchon actor = null;
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.cb0)
-			actor = this.cb0;
+			actor = (Bouchon) this.cb0;
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.fb0)
-			actor = this.fb0;
+			actor = (Bouchon) this.fb0;
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.cb1)
-			actor = this.cb1;
+			actor = (Bouchon) this.cb1;
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.fb1)
-			actor = this.fb1;
+			actor = (Bouchon) this.fb1;
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.cb2)
-			actor = this.cb2;
+			actor = (Bouchon) this.cb2;
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.fb2)
-			actor = this.fb2;
+			actor = (Bouchon) this.fb2;
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.motor)
-			actor = this.motor;
+			actor = (Bouchon) this.motor;
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.clock)
-			actor = this.timer;
+			actor = (Bouchon) this.timer;
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.door)
-			actor = this.door;
+			actor = (Bouchon) this.door;
 		
 		return actor;
 	}
