@@ -9,6 +9,7 @@ import fr.ensisa.uha.ff.gl.lift.hard.FloorSensor;
 import fr.ensisa.uha.ff.gl.lift.hard.Motor;
 import fr.ensisa.uha.ff.gl.lift.hard.Timer;
 import static org.easymock.EasyMock.*;
+import static org.junit.Assert.*;
 
 public class CabinAtFloorTestsEM {
 	public ElevatorControllerImpl sut;
@@ -16,15 +17,19 @@ public class CabinAtFloorTestsEM {
 	public Timer timer = createMock(Timer.class);
 	public Motor motor = createMock(Motor.class);
 	
-	// Etage 0
+	// Étage 0
 	public Button cb0 = createMock(Button.class);
 	public Button fb0 = createMock(Button.class);
 	public FloorSensor fs0 = createMock(FloorSensor.class);
-	// Etage 1
+	// Étage 1
 	public Button cb1 = createMock(Button.class);
 	public Button fb1 = createMock(Button.class);
 	public FloorSensor fs1 = createMock(FloorSensor.class);
-
+	// Étage 2
+	public Button cb2 = createMock(Button.class);
+	public Button fb2 = createMock(Button.class);
+	public FloorSensor fs2 = createMock(FloorSensor.class);
+	
 	
 	@Before public void createSut() {
 		this.sut = new ElevatorControllerImpl();
@@ -39,7 +44,11 @@ public class CabinAtFloorTestsEM {
 		this.sut.setCabinButton(1, cb1);
 		this.sut.setFloorButton(1, fb1);
 		this.sut.setFloorSensor(1, fs1);
-
+		// Etage 2
+		this.sut.setCabinButton(2, cb2);
+		this.sut.setFloorButton(2, fb2);
+		this.sut.setFloorSensor(2, fs2);
+		
 		
 		reset(door);
 		reset(timer);
@@ -50,6 +59,9 @@ public class CabinAtFloorTestsEM {
 		reset(cb1);
 		reset(fb1);
 		reset(fs1);
+		reset(cb2);
+		reset(fb2);
+		reset(fs2);
 	}
 	
 	@Test public void zeroPressed() {
@@ -83,7 +95,7 @@ public class CabinAtFloorTestsEM {
 		this.fb0.requestServiced();	// 
 		
 		this.cb1.requestACK();		// Appui sur le bouton "etage 1"
-		this.cb1.requestACK();		// Appui 2eme fois sur le bouton "etage 1"
+		//this.cb1.requestACK();		// Appui 2eme fois sur le bouton "etage 1"
 
 		this.door.closeDoors();		// Fermeture des portes
 		this.motor.goUp();			// Mise en route du moteur
@@ -97,7 +109,10 @@ public class CabinAtFloorTestsEM {
 		replay(this.cb1);
 		
 		this.sut.request(fb0, 0);
-		this.sut.request(this.cb1, 1);
+		//this.sut.request(this.cb1, 1);
+		assertTrue(this.sut.isDoorClosed());
+				
+
 		this.sut.request(this.cb1, 1);
 		this.sut.cabinAtFloor(fs1, 1);
 		
