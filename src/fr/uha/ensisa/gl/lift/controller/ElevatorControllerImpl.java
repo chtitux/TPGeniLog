@@ -30,6 +30,7 @@ public class ElevatorControllerImpl
 		this.floorSensors = new ArrayList<FloorSensor>();
 		this.cabinButtons = new ArrayList<Button>();
 		this.floorButtons = new ArrayList<Button>();
+		this.floor = 0; // l'ascenceur est construit à l'étage 0
 	}
 	
 	@Override
@@ -40,8 +41,6 @@ public class ElevatorControllerImpl
 	@Override
 	public void doorClosed(Door sender) {
 		// TODO Auto-generated method stub
-		
-		
 	}
 
 	@Override
@@ -52,7 +51,13 @@ public class ElevatorControllerImpl
 
 	@Override
 	public void request(Button sender, Integer floor) {
-		this.door.openDoors();
+		// Si la cabine est au bon étage, on ouvre la porte
+		if(floor.equals(this.floor)) {
+			this.door.openDoors();
+		} else {
+			// On doit bouger la cabine
+			
+		}
 	}
 
 	@Override
