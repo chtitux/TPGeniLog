@@ -118,19 +118,15 @@ public class AdapterImpl implements AdapterInterface {
 	}
 
 	@Override
-	public void ElevatorControllermotorStatusChanged(
-			ElevatorController ltd_receiverInstance, MotorStatus newState)
-			throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void ElevatorControllermotorStatusChanged(ElevatorController ltd_receiverInstance, MotorStatus newState) throws Exception {
+		this.createSut();
+		//this.sut.motorStatusChanged(this.motor, newState);
 	}
 
 	@Override
-	public void ElevatorControllerrequest(
-			ElevatorController ltd_receiverInstance, Actor sender, Floor floor)
-			throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void ElevatorControllerrequest(ElevatorController ltd_receiverInstance, Actor sender, Floor floor) throws Exception {
+		this.createSut();
+		//this.sut.request(sender, floor);
 	}
 
 	@Override
