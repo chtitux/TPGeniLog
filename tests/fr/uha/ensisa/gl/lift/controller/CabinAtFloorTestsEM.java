@@ -78,6 +78,36 @@ public class CabinAtFloorTestsEM {
 	}
 	
 	@Test public void oneFromZeroPressed() {
+		this.fb0.requestACK();		// Demande d'ouverture de l'exterieur
+		this.door.openDoors();		// Ouverture des portes
+		this.fb0.requestServiced();	// 
+		
+		this.cb1.requestACK();		// Appui sur le bouton "etage 1"
+		this.door.closeDoors();		// Fermeture des portes
+		this.motor.goUp();			// Mise en route du moteur
+		this.motor.stopMove();		// Arret du moteur
+		this.door.openDoors();		// Ouverture des portes
+		this.cb1.requestServiced();
+		
+		replay(this.door);
+		replay(this.motor);
+		replay(this.fb0);
+		replay(this.cb1);
+		
+		this.sut.request(fb0, 0);
+		this.sut.request(this.cb1, 1);
+		this.sut.cabinAtFloor(fs1, 1);
+		
+		verify(this.motor);
+		verify(this.door);
+		verify(this.fb0);
+		verify(this.cb1);
+		
+		reset(this.motor);
+		reset(this.door);
+	}
+/*	
+	@Test public void oneFromZeroPressed() {
 		this.motor.goUp();
 		this.door.closeDoors();
 		this.motor.stopMove();
@@ -88,8 +118,10 @@ public class CabinAtFloorTestsEM {
 
 		this.sut.request(this.fb1, 1);
 		this.sut.cabinAtFloor(fs1, 1);
+		
 		verify(this.motor);
 		reset(this.motor);
 		reset(this.door);
 	}
+*/
 }
