@@ -89,9 +89,7 @@ public class AdapterImpl implements AdapterInterface {
 	}
 	
 	@Override
-	public void ActorgetLastSentMessage(Actor ltd_receiverInstance,
-			Messages message) throws Exception {
-		// TODO Auto-generated method stub
+	public void ActorgetLastSentMessage(Actor ltd_receiverInstance, Messages message) throws Exception {
 		
 	}
 
@@ -149,8 +147,7 @@ public class AdapterImpl implements AdapterInterface {
 
 	@Override
 	public void closeAdapter() throws Exception {
-		// TODO Auto-generated method stub
-		
+		//Pas besoin dans notre cas
 	}
 	
 	private Object getObjectFromActor(Actor sender)	{
