@@ -41,6 +41,9 @@ public class AdapterImpl implements AdapterInterface {
 		this.cb1 = createMock(Button.class);
 		this.fb1 = createMock(Button.class);
 		this.fs1 = createMock(FloorSensor.class);
+		
+		//Création du système
+		this.createSut();
 	}
 
 	
@@ -87,7 +90,6 @@ public class AdapterImpl implements AdapterInterface {
 		else
 			floorNum = 2;
 		
-		this.createSut();
 		this.sut.cabinAtFloor(this.sut.getFloorSensor(floorNum), floorNum);
 	}
 
@@ -101,37 +103,44 @@ public class AdapterImpl implements AdapterInterface {
 		else
 			floorNum = 2;
 		
-		this.createSut();
 		this.sut.cabinLeftFloor(this.sut.getFloorSensor(floorNum), floorNum);
 	}
 
 	@Override
 	public void ElevatorControllerdoorClosed(ElevatorController ltd_receiverInstance) throws Exception {
-		this.createSut();
 		this.sut.doorClosed(this.door);
 	}
 
 	@Override
 	public void ElevatorControllerdoorOpened(ElevatorController ltd_receiverInstance) throws Exception {
-		this.createSut();
 		this.sut.doorOpened(this.door);
 	}
 
 	@Override
 	public void ElevatorControllermotorStatusChanged(ElevatorController ltd_receiverInstance, MotorStatus newState) throws Exception {
-		this.createSut();
-		//this.sut.motorStatusChanged(this.motor, newState);
+		fr.ensisa.uha.ff.gl.lift.hard.QueryableMotor.MotorStatus state = null;
+		switch (newState)
+		{
+			case goingDownward:
+				state = fr.ensisa.uha.ff.gl.lift.hard.QueryableMotor.MotorStatus.GoingDownward;
+				break;
+			case goingUpward:
+				state = fr.ensisa.uha.ff.gl.lift.hard.QueryableMotor.MotorStatus.GoingUpward;
+				break;
+			case stopped:
+				state = fr.ensisa.uha.ff.gl.lift.hard.QueryableMotor.MotorStatus.Stopped;
+				break;
+		}
+		this.sut.motorStatusChanged(this.motor, state);
 	}
 
 	@Override
 	public void ElevatorControllerrequest(ElevatorController ltd_receiverInstance, Actor sender, Floor floor) throws Exception {
-		this.createSut();
 		//this.sut.request(sender, floor);
 	}
 
 	@Override
 	public void ElevatorControllertimeout(ElevatorController ltd_receiverInstance) throws Exception {
-		this.createSut();
 		this.sut.timeout(this.sut.getTimer());
 	}
 
