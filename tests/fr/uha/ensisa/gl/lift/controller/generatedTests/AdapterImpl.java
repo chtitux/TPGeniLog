@@ -112,10 +112,9 @@ public class AdapterImpl implements AdapterInterface {
 	}
 
 	@Override
-	public void ElevatorControllerdoorOpened(
-			ElevatorController ltd_receiverInstance) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void ElevatorControllerdoorOpened(ElevatorController ltd_receiverInstance) throws Exception {
+		this.createSut();
+		this.sut.doorOpened(this.door);
 	}
 
 	@Override
