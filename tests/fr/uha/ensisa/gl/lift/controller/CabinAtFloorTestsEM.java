@@ -16,15 +16,19 @@ public class CabinAtFloorTestsEM {
 	public Timer timer = createMock(Timer.class);
 	public Motor motor = createMock(Motor.class);
 	
-	// Etage 0
+	// Étage 0
 	public Button cb0 = createMock(Button.class);
 	public Button fb0 = createMock(Button.class);
 	public FloorSensor fs0 = createMock(FloorSensor.class);
-	// Etage 1
+	// Étage 1
 	public Button cb1 = createMock(Button.class);
 	public Button fb1 = createMock(Button.class);
 	public FloorSensor fs1 = createMock(FloorSensor.class);
-
+	// Étage 2
+	public Button cb2 = createMock(Button.class);
+	public Button fb2 = createMock(Button.class);
+	public FloorSensor fs2 = createMock(FloorSensor.class);
+	
 	
 	@Before public void createSut() {
 		this.sut = new ElevatorControllerImpl();
@@ -39,7 +43,11 @@ public class CabinAtFloorTestsEM {
 		this.sut.setCabinButton(1, cb1);
 		this.sut.setFloorButton(1, fb1);
 		this.sut.setFloorSensor(1, fs1);
-
+		// Etage 2
+		this.sut.setCabinButton(2, cb2);
+		this.sut.setFloorButton(2, fb2);
+		this.sut.setFloorSensor(2, fs2);
+		
 		
 		reset(door);
 		reset(timer);
@@ -50,6 +58,9 @@ public class CabinAtFloorTestsEM {
 		reset(cb1);
 		reset(fb1);
 		reset(fs1);
+		reset(cb2);
+		reset(fb2);
+		reset(fs2);
 	}
 	
 	@Test public void zeroPressed() {
