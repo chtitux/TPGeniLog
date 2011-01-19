@@ -53,16 +53,19 @@ public class ElevatorControllerImpl
 	@Override
 	public void request(Button sender, Integer floor) {
 		this.requestedFloor = floor;
+
 		// Si l'étage demandé est l'étage actuel, on ouvre la porte
 		if(this.currentFloor.equals(this.requestedFloor)) {
 			this.door.openDoors();
 		} else {
+			this.door.closeDoors();
+			// FIXME : tester si les portes sont bien fermées
+
 			// Sinon, on doit bouger la cabine
 			if(this.currentFloor.compareTo(this.requestedFloor) < 0) {
 				// L'étage actuel est plus petit que demandé, il faut monter
-				// FIXME : tester si les portes sont bien fermées
 				this.motor.goUp();
-			} else { // Il faut descendre
+			} else { // Sinon, il faut descendre
 				this.motor.goDown();
 			}
 		}
@@ -71,6 +74,12 @@ public class ElevatorControllerImpl
 	@Override
 	public void cabinAtFloor(FloorSensor sender, Integer floor) {
 		this.currentFloor = floor;
+		
+		if(this.currentFloor.equals(this.requestedFloor)) {
+			// La cabine est à l'étage demandé, on s'arrête
+			this.motor.stopMove();
+			this.door.openDoors();
+		}
 	}
 
 	@Override
