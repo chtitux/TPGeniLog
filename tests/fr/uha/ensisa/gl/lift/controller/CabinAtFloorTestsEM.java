@@ -9,6 +9,7 @@ import fr.ensisa.uha.ff.gl.lift.hard.FloorSensor;
 import fr.ensisa.uha.ff.gl.lift.hard.Motor;
 import fr.ensisa.uha.ff.gl.lift.hard.Timer;
 import static org.easymock.EasyMock.*;
+import static org.junit.Assert.*;
 
 public class CabinAtFloorTestsEM {
 	public ElevatorControllerImpl sut;
@@ -83,7 +84,7 @@ public class CabinAtFloorTestsEM {
 		this.fb0.requestServiced();	// 
 		
 		this.cb1.requestACK();		// Appui sur le bouton "etage 1"
-		this.cb1.requestACK();		// Appui 2eme fois sur le bouton "etage 1"
+		//this.cb1.requestACK();		// Appui 2eme fois sur le bouton "etage 1"
 
 		this.door.closeDoors();		// Fermeture des portes
 		this.motor.goUp();			// Mise en route du moteur
@@ -97,7 +98,10 @@ public class CabinAtFloorTestsEM {
 		replay(this.cb1);
 		
 		this.sut.request(fb0, 0);
-		this.sut.request(this.cb1, 1);
+		//this.sut.request(this.cb1, 1);
+		assertTrue(this.sut.isDoorClosed());
+				
+
 		this.sut.request(this.cb1, 1);
 		this.sut.cabinAtFloor(fs1, 1);
 		
