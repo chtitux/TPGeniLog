@@ -137,7 +137,9 @@ public class AdapterImpl implements AdapterInterface {
 
 	@Override
 	public void ElevatorControllerrequest(ElevatorController ltd_receiverInstance, Actor sender, Floor floor) throws Exception {
-		//this.sut.request(sender, floor);
+		int floorNum = this.getFloorNumber(floor);
+		Button button = (Button) getObjectFromActor(sender);
+		this.sut.request(button, floorNum);
 	}
 
 	@Override
@@ -151,14 +153,37 @@ public class AdapterImpl implements AdapterInterface {
 		
 	}
 	
-	private int getFloorNumber(Floor floor)
-	{
-		int floorNum;
+	private Object getObjectFromActor(Actor sender)	{
+		Object actor = null;
+		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.cb0)
+			actor = this.cb0;
+		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.fb0)
+			actor = this.fb0;
+		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.cb1)
+			actor = this.cb1;
+		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.fb1)
+			actor = this.fb1;
+		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.cb2)
+			actor = this.cb2;
+		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.fb2)
+			actor = this.fb2;
+		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.motor)
+			actor = this.motor;
+		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.clock)
+			actor = this.timer;
+		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.door)
+			actor = this.door;
+		
+		return actor;
+	}
+	
+	private int getFloorNumber(Floor floor)	{
+		int floorNum = -1;
 		if (floor == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Floor._0)
 			floorNum = 0;
-		else if (floor == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Floor._1)
+		if (floor == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Floor._1)
 			floorNum = 1;
-		else
+		if (floor == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Floor._2)
 			floorNum = 2;
 		return floorNum;
 	}
