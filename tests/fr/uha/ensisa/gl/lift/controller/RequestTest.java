@@ -12,7 +12,7 @@ public class RequestTest extends CabinAtFloorTestsEM {
 		this.zeroPressedOpenClose();
 	}
 	
-	@Test public void request1Motor() {
+	@Test public void request1OpenCloseUpOpen() {
 		this.oneFromZeroPressed();
 	}
 }
