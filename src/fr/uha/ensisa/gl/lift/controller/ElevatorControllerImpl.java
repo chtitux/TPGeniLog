@@ -3,16 +3,20 @@ package fr.uha.ensisa.gl.lift.controller;
 import java.util.ArrayList;
 
 import fr.ensisa.uha.ff.gl.lift.hard.Button;
+import fr.ensisa.uha.ff.gl.lift.hard.ButtonListener;
 import fr.ensisa.uha.ff.gl.lift.hard.Door;
 import fr.ensisa.uha.ff.gl.lift.hard.DoorListener;
 import fr.ensisa.uha.ff.gl.lift.hard.ElevatorController;
 import fr.ensisa.uha.ff.gl.lift.hard.FloorSensor;
+import fr.ensisa.uha.ff.gl.lift.hard.FloorSensorListener;
 import fr.ensisa.uha.ff.gl.lift.hard.Motor;
+import fr.ensisa.uha.ff.gl.lift.hard.MotorListener;
 import fr.ensisa.uha.ff.gl.lift.hard.Timer;
 import fr.ensisa.uha.ff.gl.lift.hard.QueryableMotor.MotorStatus;
 import fr.ensisa.uha.ff.gl.lift.hard.TimerListener;
 
-public class ElevatorControllerImpl implements ElevatorController, TimerListener, DoorListener {
+public class ElevatorControllerImpl
+	implements ElevatorController, DoorListener, MotorListener, ButtonListener, FloorSensorListener, TimerListener {
 
 	private Door door;
 	private Motor motor;
@@ -20,6 +24,7 @@ public class ElevatorControllerImpl implements ElevatorController, TimerListener
 	private ArrayList<FloorSensor> floorSensors;
 	private ArrayList<Button> cabinButtons;
 	private ArrayList<Button> floorButtons;
+	private Integer floor;
 
 	public ElevatorControllerImpl() {
 		this.floorSensors = new ArrayList<FloorSensor>();
@@ -36,6 +41,7 @@ public class ElevatorControllerImpl implements ElevatorController, TimerListener
 	public void doorClosed(Door sender) {
 		// TODO Auto-generated method stub
 		
+		
 	}
 
 	@Override
@@ -51,8 +57,7 @@ public class ElevatorControllerImpl implements ElevatorController, TimerListener
 
 	@Override
 	public void cabinAtFloor(FloorSensor sender, Integer floor) {
-		// TODO Auto-generated method stub
-
+		this.floor = floor;
 	}
 
 	@Override
@@ -66,7 +71,7 @@ public class ElevatorControllerImpl implements ElevatorController, TimerListener
 		this.door.closeDoors();
 		timer.cancel();
 	}
-
+	
 	@Override
 	public Door getDoor() {
 		return this.door;
