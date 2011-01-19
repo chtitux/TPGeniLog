@@ -28,6 +28,10 @@ public class AdapterImpl implements AdapterInterface {
 	private Button fb1;
 	private FloorSensor fs1;
 	
+	private Button cb2;
+	private Button fb2;
+	private FloorSensor fs2;
+	
 	public AdapterImpl() {
 		this.door = createMock(Door.class);
 		this.timer = createMock(Timer.class);
@@ -41,6 +45,10 @@ public class AdapterImpl implements AdapterInterface {
 		this.cb1 = createMock(Button.class);
 		this.fb1 = createMock(Button.class);
 		this.fs1 = createMock(FloorSensor.class);
+		// Étage 2
+		this.cb2 = createMock(Button.class);
+		this.fb2 = createMock(Button.class);
+		this.fs2 = createMock(FloorSensor.class);
 		
 		//Création du système
 		this.createSut();
@@ -60,6 +68,10 @@ public class AdapterImpl implements AdapterInterface {
 		this.sut.setCabinButton(1, cb1);
 		this.sut.setFloorButton(1, fb1);
 		this.sut.setFloorSensor(1, fs1);
+		// Etage 2
+		this.sut.setCabinButton(2, cb2);
+		this.sut.setFloorButton(2, fb2);
+		this.sut.setFloorSensor(2, fs2);
 
 		
 		reset(door);
@@ -71,6 +83,9 @@ public class AdapterImpl implements AdapterInterface {
 		reset(cb1);
 		reset(fb1);
 		reset(fs1);
+		reset(cb2);
+		reset(fb2);
+		reset(fs2);
 	}
 	
 	@Override
