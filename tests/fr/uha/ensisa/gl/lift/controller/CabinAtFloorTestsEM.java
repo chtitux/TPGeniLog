@@ -79,10 +79,17 @@ public class CabinAtFloorTestsEM {
 	
 	@Test public void oneFromZeroPressed() {
 		this.motor.goUp();
+		this.door.closeDoors();
+		this.motor.stopMove();
+		this.door.openDoors();
+		
+		replay(this.door);
 		replay(this.motor);
+
 		this.sut.request(this.fb1, 1);
+		this.sut.cabinAtFloor(fs1, 1);
 		verify(this.motor);
 		reset(this.motor);
-		
+		reset(this.door);
 	}
 }
