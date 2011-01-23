@@ -51,8 +51,18 @@ public class ElevatorControllerImpl
 
 	@Override
 	public void motorStatusChanged(Motor sender, MotorStatus status) {
-		// TODO Auto-generated method stub
-
+		switch (status)
+		{
+			case GoingDownward:
+				this.motor.goDown();
+				break;
+			case GoingUpward:
+				this.motor.goUp();
+				break;
+			case Stopped:
+				this.motor.stopMove();
+				break;
+		}
 	}
 
 	@Override
