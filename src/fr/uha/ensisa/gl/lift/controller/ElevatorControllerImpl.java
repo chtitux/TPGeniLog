@@ -46,6 +46,11 @@ public class ElevatorControllerImpl
 
 	@Override
 	public void doorClosed(Door sender) {
+		if (this.lastFloor.compareTo(this.requestedFloor) < 0)
+			this.motor.goUp();
+		else
+			this.motor.goDown();
+		
 		this.doorClosed = true;
 	}
 
@@ -68,7 +73,8 @@ public class ElevatorControllerImpl
 	@Override
 	public void request(Button sender, Integer floor) {
 		this.requestedFloor = floor;
-		sender.requestACK();
+		if (this.lastFloor.compareTo(this.requestedFloor) != 0)
+			sender.requestACK();
 		
 		// Si l'ascenceur est à l'arrêt et
 		// que le dernier étage atteint est l'étage demandé, on ouvre la porte
@@ -76,10 +82,9 @@ public class ElevatorControllerImpl
 			this.door.openDoors();
 			sender.requestServiced();
 		} else {
-			this.door.closeDoors();
-			// Si les portes sont encore ouvertes => probleme
-			if(this.doorClosed == false)
-				return;
+			// Si les portes ne sont pas ouvertes, on les fermes
+			if(!this.doorClosed)
+				this.door.closeDoors();
 			
 			if(this.lastFloor.compareTo(this.requestedFloor) < 0) {
 				// L'étage actuel est plus petit que demandé, il faut monter
@@ -105,8 +110,10 @@ public class ElevatorControllerImpl
 
 	@Override
 	public void cabinLeftFloor(FloorSensor sender, Integer floor) {
-		// TODO Auto-generated method stub
-
+		this.lastFloor = floor;
+		
+		if(this.lastFloor.equals(this.requestedFloor))
+			this.motor.stopMove();
 	}
 
 	@Override
