@@ -84,6 +84,7 @@ public class RequestTest extends CabinAtFloorTestsEM {
 		sut.doorOpened(door);
 		
 		verify(timer);
+		reset(timer);
 		
 		//On notifie le timeout
 		reset(door);

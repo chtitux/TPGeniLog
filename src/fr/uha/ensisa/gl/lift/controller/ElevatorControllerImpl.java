@@ -31,7 +31,7 @@ public class ElevatorControllerImpl
 	private Boolean mustGoUp;
 	private Boolean mustGoDown;
 	private Boolean mustStay[];
-	private Boolean alreadyTimeout;
+	public Boolean alreadyTimeout;
 	
 	public ElevatorControllerImpl() {
 		this.floorSensors = new ArrayList<FloorSensor>();
@@ -162,6 +162,7 @@ public class ElevatorControllerImpl
 		if (!this.alreadyTimeout) {
 			this.isBetweenFloors = false;
 			this.door.closeDoors();
+			this.timer.countdown(5000);
 		}
 		else {
 			//PB !!!!!!
