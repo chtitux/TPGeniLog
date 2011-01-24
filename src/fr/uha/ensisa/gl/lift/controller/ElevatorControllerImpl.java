@@ -109,7 +109,7 @@ public class ElevatorControllerImpl
 	@Override
 	public void motorStatusChanged(Motor sender, MotorStatus status) {
 		this.isBetweenFloors = true;
-		this.motor.stopMove();
+		//this.motor.stopMove();
 		/*
 		switch(this.state)
 		{
@@ -206,6 +206,8 @@ public class ElevatorControllerImpl
 			this.motor.stopMove();
 			this.door.openDoors();
 		}
+		
+		this.isBetweenFloors = false;
 	}
 
 	@Override
