@@ -103,10 +103,12 @@ public class ElevatorControllerImpl
 		
 		//Si on n'est pas à l'étage demandé ou si on vient d'en partir
 		// on allume le bouton
-		if (this.currentFloor != floor || this.isBetweenFloors)
+		if (this.currentFloor != floor || this.isBetweenFloors) {
 			sender.requestACK();
-		
-		this.requestedFloors.add(floor);
+			this.requestedFloors.add(floor);
+		} else {// On est déjà à l'étage, on ouvre les portes sans enregistrer l'etage
+			this.door.openDoors();
+		}
 
 		
 		//Si on réouvre la porte après l'ordre de fermeture
