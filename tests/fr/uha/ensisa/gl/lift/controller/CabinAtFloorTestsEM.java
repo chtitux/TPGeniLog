@@ -114,6 +114,7 @@ public class CabinAtFloorTestsEM {
 				
 
 		this.sut.request(this.cb1, 1);
+		assert(this.sut.isDoorClosed());
 		this.sut.cabinAtFloor(fs1, 1);
 		
 		verify(this.motor);
