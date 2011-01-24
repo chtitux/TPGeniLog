@@ -24,38 +24,100 @@ public class ElevatorControllerImpl
 	private ArrayList<FloorSensor> floorSensors;
 	private ArrayList<Button> cabinButtons;
 	private ArrayList<Button> floorButtons;
-	private Integer lastFloor;
+	private Boolean isDoorClosed;
+	private Boolean isBetweenFloors;
+	private Integer currentFloor;
 	private Integer requestedFloor;
-	private boolean doorClosed;
-	private boolean isMoving;
+	private Boolean mustGoUp;
+	private Boolean mustGoDown;
+	private Boolean mustStay[];
+	private Boolean alreadyAtFloor[];
+	
+	public enum States {
+		Running__DoorOpened__Closing,
+		Running__BetweenFloors,
+		Running__DoorOpened,
+		Running,
+		Running__AtFloor,
+		Running__Init,
+		Running__DoorOpened__LetInOut,
+		Emergency,
+		Running__DoorOpened__Init,
+		Init,
+		Running__DoorOpened__ReopeningDoors,
+		Running__DoorOpened__Final,
+		Running__Emergency
+		}
+	private States state;
 	
 	public ElevatorControllerImpl() {
 		this.floorSensors = new ArrayList<FloorSensor>();
 		this.cabinButtons = new ArrayList<Button>();
 		this.floorButtons = new ArrayList<Button>();
-		this.lastFloor = 0; // l'ascenceur est construit à l'étage 0
-		this.doorClosed = true;
-		this.isMoving = false;
+		
+		//L'ascenceur est construit à l'étage 0, portes fermées
+		this.currentFloor = 0;
+		this.requestedFloor = 0;
+		this.state = States.Running__AtFloor;
+		this.isBetweenFloors = false;
+		this.isDoorClosed = true;
+		this.mustGoDown = false;
+		this.mustGoUp = false;
+		
+		this.mustStay = new Boolean[3];
+		this.mustStay[0] = false;
+		this.mustStay[1] = false;
+		this.mustStay[2] = false;
 	}
 	
 	@Override
 	public void doorOpened(Door sender) {
-		this.getTimer().countdown(5000);
-		this.doorClosed = false;
+		this.state = States.Running__DoorOpened__LetInOut;
+		//this.mustGoDown = false;
+		//this.mustGoUp = false;
+		
+		if (!isBetweenFloors)
+			this.getTimer().countdown(5000);
+		
+		this.isDoorClosed = false;
+		this.mustStay[currentFloor] = false;
 	}
 
 	@Override
 	public void doorClosed(Door sender) {
-		if (this.lastFloor.compareTo(this.requestedFloor) < 0)
-			this.motor.goUp();
-		else
-			this.motor.goDown();
+		this.state = States.Running__AtFloor;
+		this.isBetweenFloors = false;
+		this.isDoorClosed = true;
+		this.getTimer().cancel();
 		
-		this.doorClosed = true;
+		//On fait bouger le moteur
+		if (this.currentFloor < this.requestedFloor) {
+			this.mustGoUp = true;
+			this.motor.goUp();
+		}
+		else if (this.currentFloor > this.requestedFloor) {
+			this.mustGoDown = true;
+			this.motor.goDown();
+		}
+		else if (this.currentFloor == this.requestedFloor && !this.mustGoDown && !this.mustGoUp) {
+			this.mustGoDown = false;
+			this.mustGoUp = false;
+			//this.motor.stopMove();
+		}
 	}
 
 	@Override
 	public void motorStatusChanged(Motor sender, MotorStatus status) {
+		this.isBetweenFloors = true;
+		this.motor.stopMove();
+		/*
+		switch(this.state)
+		{
+			case Running__AtFloor:
+				this.state = States.Running__BetweenFloors;
+				break;
+		}
+		
 		switch (status)
 		{
 			case GoingDownward:
@@ -68,58 +130,96 @@ public class ElevatorControllerImpl
 				this.motor.stopMove();
 				break;
 		}
+		*/
 	}
 
 	@Override
 	public void request(Button sender, Integer floor) {
 		this.requestedFloor = floor;
-		if (this.lastFloor.compareTo(this.requestedFloor) != 0)
-			sender.requestACK();
+		this.mustStay[floor] = true;
 		
+		if (this.currentFloor != floor || this.isBetweenFloors)
+			sender.requestACK();
+			
+		if (this.requestedFloor == this.currentFloor || this.mustStay[currentFloor])
+			this.door.openDoors();
+		
+		if (isDoorClosed && !this.mustStay[currentFloor]) {
+			//On fait bouger le moteur
+			if (this.currentFloor < this.requestedFloor) {
+				this.mustGoUp = true;
+				this.motor.goUp();
+			}
+			else if (this.currentFloor > this.requestedFloor) {
+				this.mustGoDown = true;
+				this.motor.goDown();
+			}
+			else if (this.currentFloor == this.requestedFloor && !this.mustGoDown && !this.mustGoUp) {
+				this.mustGoDown = false;
+				this.mustGoUp = false;
+				//this.motor.stopMove();
+			}
+		}
+		
+		
+		//this.requestedFloor = floor;
+		//if (this.currentFloor.compareTo(this.requestedFloor) != 0)
+			//sender.requestACK();
+		/*
 		// Si l'ascenceur est à l'arrêt et
 		// que le dernier étage atteint est l'étage demandé, on ouvre la porte
-		if(this.isMoving == false && this.lastFloor.equals(this.requestedFloor)) {
+		if(this.isMoving == false && this.currentFloor.equals(this.requestedFloor)) {
 			this.door.openDoors();
-			sender.requestServiced();
+			//sender.requestServiced();
 		} else {
-			// Si les portes ne sont pas ouvertes, on les fermes
 			if(!this.doorClosed)
+			// Si les portes ne sont pas ouvertes, on les fermes
 				this.door.closeDoors();
 			
-			if(this.lastFloor.compareTo(this.requestedFloor) < 0) {
+			if(this.currentFloor.compareTo(this.requestedFloor) < 0) {
 				// L'étage actuel est plus petit que demandé, il faut monter
 				this.motor.goUp();
 			} else { // Sinon, il faut descendre
 				this.motor.goDown();
 			}
 		}
+		*/
 	}
 
 	@Override
 	public void cabinAtFloor(FloorSensor sender, Integer floor) {
-		this.lastFloor = floor;
+		this.state = States.Running__AtFloor;
 		
-		if(this.lastFloor.equals(this.requestedFloor)) {
-			// La cabine est à l'étage demandé, on s'arrête
+		//On notifie l'arrivée de l'ascenseur aux boutons de la cabine et de l'étage,
+		//mais que si on vient de changer d'étage
+		if (this.currentFloor != floor)
+		{
+			this.getCabinButton(floor).requestServiced();
+			this.getFloorButton(floor).requestServiced();
+		}
+		
+		//On met à jour le numéro de l'étage actuel
+		this.currentFloor = floor;
+		
+		//On stoppe le moteur si on est arrivé et on demande l'ouverture des portes
+		if(this.currentFloor == this.requestedFloor) {
 			this.motor.stopMove();
 			this.door.openDoors();
-			this.cabinButtons.get(this.lastFloor).requestServiced();
-			this.floorButtons.get(this.lastFloor).requestServiced();
 		}
 	}
 
 	@Override
 	public void cabinLeftFloor(FloorSensor sender, Integer floor) {
-		this.lastFloor = floor;
-		
-		if(this.lastFloor.equals(this.requestedFloor))
-			this.motor.stopMove();
+		this.state = States.Running__BetweenFloors;
+		this.isBetweenFloors = true;
+		this.currentFloor = floor;
 	}
 
 	@Override
 	public void timeout(Timer timer) {
+		this.state = States.Running__DoorOpened__Closing;
+		this.isBetweenFloors = false;
 		this.door.closeDoors();
-		timer.cancel();
 	}
 	
 	@Override
@@ -199,9 +299,13 @@ public class ElevatorControllerImpl
 	public void setTimer(Timer t) {
 		this.timer = t;
 	}
-	
+	/*
 	public boolean isDoorClosed() {
 		return doorClosed;
+	}
+	*/
+	public void setState(States state) {
+		this.state = state;
 	}
 
 }
