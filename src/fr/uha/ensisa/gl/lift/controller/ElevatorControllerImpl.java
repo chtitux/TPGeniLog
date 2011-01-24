@@ -144,11 +144,17 @@ public class ElevatorControllerImpl
 		this.requestedFloor = floor;
 		this.mustStay[floor] = true;
 		
+		//Si on n'est pas à l'étage demandé ou si on vient d'en partir
 		if (this.currentFloor != floor || this.isBetweenFloors)
 			sender.requestACK();
-			
+		
+		//Si on doit ouvrir la porte alors qu'on ne dirait pas
 		if (this.requestedFloor == this.currentFloor || this.mustStay[currentFloor])
 			this.door.openDoors();
+		
+		//Si on réouvre la porte après l'ordre de fermeture
+		if (this.alreadyTimeout)
+			this.timer.cancel();
 		
 		if (isDoorClosed && !this.mustStay[currentFloor]) {
 			//On fait bouger le moteur
