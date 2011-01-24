@@ -51,7 +51,7 @@ public class ElevatorControllerImpl
 		this.alreadyTimeout = false;
 		
 		this.mustGoDown = false;
-		this.mustGoUp = false;
+		this.mustGoUp = true;
 	}
 	
 	/**
@@ -134,21 +134,21 @@ public class ElevatorControllerImpl
 	public void computeActionMotor() {
 		// Tri
 		Integer temp;
-		if(this.requestedFloors.size() != 1) {
-			if(this.mustGoUp || this.currentFloor == 0) { // l'ascenceur est en train de monter
+		if(this.requestedFloors.size() > 1) {
+			if(this.mustGoUp && this.currentFloor != 3) { // l'ascenceur est en train de monter
 				Collections.sort(this.requestedFloors);	// On trie les étages dans l'ordre croissant
 				// Tant que l'étage prochain est inférieur au prochain étage dans l'immeuble, on le met après tous les autres
-				while(this.requestedFloors.get(0) <= this.currentFloor) {
+				while(this.requestedFloors.get(0) < this.currentFloor) {
 					temp = this.requestedFloors.get(0);
 					this.requestedFloors.add(temp);
 					this.requestedFloors.remove(0);
 				}
 				
-			} else if(this.mustGoDown) { // L'ascenceur est en train de descendre
+			} else if(this.mustGoDown && this.currentFloor != 0) { // L'ascenceur est en train de descendre
 				Collections.sort(this.requestedFloors, Collections.reverseOrder()); // On trie dans l'ordre décroissant (4,3,2,1 par ex)
 				// Tant que l'étage prochain est supérieur au prochain étage dans l'immeuble, on le met après tous les autres
 				// Ex : on est à l'étage 3, dont on veut 2, 1, 4, 3
-				while(this.requestedFloors.get(0) >= this.currentFloor) {
+				while(this.requestedFloors.get(0) > this.currentFloor) {
 					temp = this.requestedFloors.get(0);
 					this.requestedFloors.add(temp);
 					this.requestedFloors.remove(0);
@@ -193,7 +193,7 @@ public class ElevatorControllerImpl
 		
 		
 		// Etat d'urgence : on stoppe
-		if (this.requestedFloors.contains(floor))
+		if (this.requestedFloors.contains(floor) && this.requestedFloors.get(0) == floor)
 			this.motor.stopMove();
 	}
 
