@@ -14,6 +14,7 @@ import fr.ensisa.uha.ff.gl.lift.hard.MotorListener;
 import fr.ensisa.uha.ff.gl.lift.hard.Timer;
 import fr.ensisa.uha.ff.gl.lift.hard.QueryableMotor.MotorStatus;
 import fr.ensisa.uha.ff.gl.lift.hard.TimerListener;
+import fr.uha.ensisa.gl.lift.controller.generatedTests.Enumerations.Messages;
 
 public class ElevatorControllerImpl
 	implements ElevatorController, DoorListener, MotorListener, ButtonListener, FloorSensorListener, TimerListener {
@@ -32,6 +33,7 @@ public class ElevatorControllerImpl
 	private Boolean mustGoDown;
 	private Boolean mustStay[];
 	private Boolean alreadyAtFloor[];
+	private Boolean alreadyTimeout;
 	
 	public enum States {
 		Running__DoorOpened__Closing,
@@ -68,6 +70,8 @@ public class ElevatorControllerImpl
 		this.mustStay[0] = false;
 		this.mustStay[1] = false;
 		this.mustStay[2] = false;
+		
+		this.alreadyTimeout = false;
 	}
 	
 	@Override
@@ -80,12 +84,12 @@ public class ElevatorControllerImpl
 			this.getTimer().countdown(5000);
 		
 		this.isDoorClosed = false;
-		this.mustStay[currentFloor] = false;
 	}
 
 	@Override
 	public void doorClosed(Door sender) {
 		this.state = States.Running__AtFloor;
+		this.alreadyTimeout = false;
 		this.isBetweenFloors = false;
 		this.isDoorClosed = true;
 		this.getTimer().cancel();
@@ -104,11 +108,13 @@ public class ElevatorControllerImpl
 			this.mustGoUp = false;
 			//this.motor.stopMove();
 		}
+		
+		this.mustStay[currentFloor] = false;
 	}
 
 	@Override
 	public void motorStatusChanged(Motor sender, MotorStatus status) {
-		this.isBetweenFloors = true;
+		//this.isBetweenFloors = true;
 		//this.motor.stopMove();
 		/*
 		switch(this.state)
@@ -194,8 +200,8 @@ public class ElevatorControllerImpl
 		//mais que si on vient de changer d'étage
 		if (this.currentFloor != floor)
 		{
-			this.getCabinButton(floor).requestServiced();
-			this.getFloorButton(floor).requestServiced();
+			//this.getCabinButton(floor).requestServiced();
+			//this.getFloorButton(floor).requestServiced();
 		}
 		
 		//On met à jour le numéro de l'étage actuel
@@ -205,6 +211,9 @@ public class ElevatorControllerImpl
 		if(this.currentFloor == this.requestedFloor) {
 			this.motor.stopMove();
 			this.door.openDoors();
+			
+			this.getCabinButton(floor).requestServiced();
+			this.getFloorButton(floor).requestServiced();
 		}
 		
 		this.isBetweenFloors = false;
@@ -222,9 +231,15 @@ public class ElevatorControllerImpl
 
 	@Override
 	public void timeout(Timer timer) {
-		this.state = States.Running__DoorOpened__Closing;
-		this.isBetweenFloors = false;
-		this.door.closeDoors();
+		if (!this.alreadyTimeout) {
+			this.state = States.Running__DoorOpened__Closing;
+			this.isBetweenFloors = false;
+			this.door.closeDoors();
+		}
+		else {
+			//PB !!!!!!
+		}
+		this.alreadyTimeout = true;
 	}
 	
 	@Override
