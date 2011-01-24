@@ -134,7 +134,7 @@ public class ElevatorControllerImpl
 	public void computeActionMotor() {
 		// Tri
 		Integer temp;
-		if(this.mustGoUp) { // l'ascenceur est en train de monter
+		if(this.mustGoUp || this.currentFloor == 0) { // l'ascenceur est en train de monter
 			Collections.sort(this.requestedFloors);	// On trie les étages dans l'ordre croissant
 			// Tant que l'étage prochain est inférieur au prochain étage dans l'immeuble, on le met après tous les autres
 			temp = this.requestedFloors.get(0);
