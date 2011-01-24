@@ -1,6 +1,5 @@
 package fr.uha.ensisa.gl.lift.controller.generatedTests;
 
-import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 import fr.ensisa.uha.ff.gl.lift.hard.Button;
@@ -40,25 +39,13 @@ public class AdapterImpl implements AdapterInterface {
 	private FloorSensor fs2;
 	
 	public AdapterImpl() {
-		/*
-		this.door = createMock(Door.class);
-		this.timer = createMock(Timer.class);
-		this.motor = createMock(Motor.class);
-		
-		// Étage 0
-		this.cb0 = createMock(Button.class);
-		this.fb0 = createMock(Button.class);
-		this.fs0 = createMock(FloorSensor.class);
-		// Étage 1
-		this.cb1 = createMock(Button.class);
-		this.fb1 = createMock(Button.class);
-		this.fs1 = createMock(FloorSensor.class);
-		// Étage 2
-		this.cb2 = createMock(Button.class);
-		this.fb2 = createMock(Button.class);
-		this.fs2 = createMock(FloorSensor.class);
-		*/
-		
+		//Initialisation du système
+		this.initSut();
+		//Création du système
+		this.createSut();
+	}
+
+	public void initSut() {
 		this.door = new DoorBouchon();
 		this.timer = new TimerBouchon();
 		this.motor = new MotorBouchon();
@@ -75,11 +62,7 @@ public class AdapterImpl implements AdapterInterface {
 		this.cb2 = new ButtonBouchon();
 		this.fb2 = new ButtonBouchon();
 		this.fs2 = new FloorSensorBouchon();
-		
-		//Création du système
-		this.createSut();
 	}
-
 	
 	public void createSut() {
 		this.sut = new ElevatorControllerImpl();
@@ -98,22 +81,6 @@ public class AdapterImpl implements AdapterInterface {
 		this.sut.setCabinButton(2, cb2);
 		this.sut.setFloorButton(2, fb2);
 		this.sut.setFloorSensor(2, fs2);
-
-		
-		/*
-		reset(door);
-		reset(timer);
-		reset(motor);
-		reset(cb0);
-		reset(fb0);
-		reset(fs0);
-		reset(cb1);
-		reset(fb1);
-		reset(fs1);
-		reset(cb2);
-		reset(fb2);
-		reset(fs2);
-		*/
 	}
 	
 	@Override
