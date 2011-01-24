@@ -72,7 +72,6 @@ public class ElevatorControllerImpl
 		
 		
 		if(this.requestedFloors.size() > 0) { // Il reste des étage à desservir
-		
 			this.computeActionMotor();
 		}
 		
@@ -108,7 +107,9 @@ public class ElevatorControllerImpl
 						// Les portes vont se fermer et on fait le calcul à ce moment là
 					}
 				} else { // les portes sont ouvertes, on les ferme
-					this.door.closeDoors();
+					//Sauf si on doit déservir l'étage courant !!
+					if (!this.requestedFloors.contains(this.currentFloor))
+						this.door.closeDoors();
 				}
 			} else {// On est déjà à l'étage, on ouvre les portes sans enregistrer l'etage
 				this.door.openDoors();
