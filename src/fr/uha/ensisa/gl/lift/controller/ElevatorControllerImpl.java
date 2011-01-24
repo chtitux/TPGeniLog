@@ -1,6 +1,8 @@
 package fr.uha.ensisa.gl.lift.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import fr.ensisa.uha.ff.gl.lift.hard.Button;
 import fr.ensisa.uha.ff.gl.lift.hard.ButtonListener;
@@ -47,6 +49,9 @@ public class ElevatorControllerImpl
 		this.requestedFloors = new ArrayList<Integer>();
 		
 		this.alreadyTimeout = false;
+		
+		this.mustGoDown = false;
+		this.mustGoUp = false;
 	}
 	
 	/**
@@ -127,6 +132,24 @@ public class ElevatorControllerImpl
 	}
 	
 	public void computeActionMotor() {
+		// Tri
+		Integer temp;
+		if(this.mustGoUp) { // l'ascenceur est en train de monter
+			Collections.sort(this.requestedFloors);	// On trie les étages dans l'ordre croissant
+			// Tant que l'étage prochain est inférieur au prochain étage dans l'immeuble, on le met après tous les autres
+			temp = this.requestedFloors.get(0);
+			this.requestedFloors.add(temp);
+			this.requestedFloors.remove(0);
+			
+		} else if(this.mustGoDown) { // L'ascenceur est en train de descendre
+			Collections.sort(this.requestedFloors, Collections.reverseOrder()); // On trie dans l'ordre décroissant (4,3,2,1 par ex)
+			// Tant que l'étage prochain est supérieur au prochain étage dans l'immeuble, on le met après tous les autres
+			// Ex : on est à l'étage 3, dont on veut 2, 1, 4, 3
+			temp = this.requestedFloors.get(0);
+			this.requestedFloors.add(temp);
+			this.requestedFloors.remove(0);
+			
+		}
 		// Si on est à un étage et que c'est la 1ere commande
 		Integer floor = this.requestedFloors.get(0);
 		if(this.currentFloor < floor) {
