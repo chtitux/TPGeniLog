@@ -184,5 +184,17 @@ public class AdapterImpl implements AdapterInterface {
 			floorNum = 2;
 		return floorNum;
 	}
+	
+	private int getFloorNumber(Floor floor)
+	{
+		int floorNum;
+		if (floor == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Floor._0)
+			floorNum = 0;
+		else if (floor == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Floor._1)
+			floorNum = 1;
+		else
+			floorNum = 2;
+		return floorNum;
+	}
 
 }
