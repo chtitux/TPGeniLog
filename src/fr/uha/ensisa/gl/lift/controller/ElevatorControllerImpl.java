@@ -46,10 +46,11 @@ public class ElevatorControllerImpl
 		this.mustGoDown = false;
 		this.mustGoUp = false;
 		
-		this.mustStay = new Boolean[3];
+		this.mustStay = new Boolean[4];
 		this.mustStay[0] = false;
 		this.mustStay[1] = false;
 		this.mustStay[2] = false;
+		this.mustStay[3] = false;
 		
 		this.alreadyTimeout = false;
 	}
