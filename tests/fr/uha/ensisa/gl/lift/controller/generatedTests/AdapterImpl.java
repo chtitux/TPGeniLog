@@ -147,6 +147,7 @@ public class AdapterImpl implements AdapterInterface {
 	
 	private Bouchon getObjectFromActor(Actor sender)	{
 		Bouchon actor = null;
+
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.cb0)
 			actor = (Bouchon) this.cb0;
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.fb0)
@@ -165,41 +166,6 @@ public class AdapterImpl implements AdapterInterface {
 			actor = (Bouchon) this.timer;
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.door)
 			actor = (Bouchon) this.door;
-		
-		return actor;
-	}
-	
-	private int getFloorNumber(Floor floor)	{
-		int floorNum = -1;
-		if (floor == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Floor._0)
-			floorNum = 0;
-		if (floor == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Floor._1)
-			floorNum = 1;
-		if (floor == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Floor._2)
-			floorNum = 2;
-		return floorNum;
-	}
-	
-	private Object getObjectFromActor(Actor sender)	{
-		Object actor = null;
-		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.cb0)
-			actor = this.cb0;
-		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.fb0)
-			actor = this.fb0;
-		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.cb1)
-			actor = this.cb1;
-		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.fb1)
-			actor = this.fb1;
-		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.cb2)
-			actor = this.cb2;
-		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.fb2)
-			actor = this.fb2;
-		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.motor)
-			actor = this.motor;
-		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.clock)
-			actor = this.timer;
-		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.door)
-			actor = this.door;
 		
 		return actor;
 	}
