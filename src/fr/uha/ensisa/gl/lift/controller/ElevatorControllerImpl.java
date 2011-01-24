@@ -215,6 +215,9 @@ public class ElevatorControllerImpl
 		this.state = States.Running__BetweenFloors;
 		this.isBetweenFloors = true;
 		this.currentFloor = floor;
+		
+		if (this.mustStay[floor])
+			this.motor.stopMove();
 	}
 
 	@Override
