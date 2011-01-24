@@ -165,7 +165,7 @@ public class ElevatorControllerImpl
 			this.timer.countdown(5000);
 		}
 		else {
-			//PB !!!!!!
+			this.door.openDoors();
 		}
 		this.alreadyTimeout = true;
 	}
