@@ -31,7 +31,6 @@ public class ElevatorControllerImpl
 	private Boolean mustGoUp;
 	private Boolean mustGoDown;
 	private Boolean mustStay[];
-	private Boolean alreadyAtFloor[];
 	private Boolean alreadyTimeout;
 	
 	public ElevatorControllerImpl() {
