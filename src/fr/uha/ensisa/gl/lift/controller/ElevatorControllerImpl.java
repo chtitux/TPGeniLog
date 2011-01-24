@@ -73,22 +73,7 @@ public class ElevatorControllerImpl
 		
 		if(this.requestedFloors.size() > 0) { // Il reste des étage à desservir
 		
-			//On fait bouger le moteur
-			if (this.currentFloor < this.requestedFloors.get(0)) { // Le prochain etage à desservir est plus bas
-				this.mustGoUp = true;
-				this.mustGoDown = false;
-				this.motor.goUp();
-			}
-			else if (this.currentFloor > this.requestedFloors.get(0)) { // Le prochain etage à desservir est plus haut
-				this.mustGoDown = true;
-				this.mustGoUp = false;
-				this.motor.goDown();
-			}
-			else if (this.currentFloor == this.requestedFloors.get(0)) {
-				// Nous sommes sur le prochain etage à desservir
-				this.mustGoDown = false;
-				this.mustGoUp = false;
-			}
+			this.computeActionMotor();
 		}
 		
 	}
@@ -118,18 +103,9 @@ public class ElevatorControllerImpl
 				// this.requestedFloors.add(floor);	// on enregistre l'ordre // FIXME: à virer
 				if(this.isDoorClosed) { // Les portes sont fermées, on calcule ici
 					if(this.requestedFloors.size() == 1) {
-						// Si on est à un étage et que c'est la 1ere commande
-						if(this.currentFloor < floor) {
-							this.mustGoUp = true;
-							this.mustGoDown = false;
-							this.motor.goUp();
-						} else if(this.currentFloor > floor) {
-							this.mustGoUp = false;
-							this.mustGoDown = true;
-							this.motor.goDown();
-						}
+						this.computeActionMotor();
 					} else { // ce n'est pas la 1ere requete
-						
+						// Les portes vont se fermer et on fait le calcul à ce moment là
 					}
 				} else { // les portes sont ouvertes, on les ferme
 					this.door.closeDoors();
@@ -147,6 +123,20 @@ public class ElevatorControllerImpl
 			else
 				this.timer.cancel();
 		
+	}
+	
+	public void computeActionMotor() {
+		// Si on est à un étage et que c'est la 1ere commande
+		Integer floor = this.requestedFloors.get(0);
+		if(this.currentFloor < floor) {
+			this.mustGoUp = true;
+			this.mustGoDown = false;
+			this.motor.goUp();
+		} else if(this.currentFloor > floor) {
+			this.mustGoUp = false;
+			this.mustGoDown = true;
+			this.motor.goDown();
+		}
 	}
 
 	@Override
