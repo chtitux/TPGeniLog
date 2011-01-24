@@ -102,10 +102,25 @@ public class ElevatorControllerImpl
 	public void request(Button sender, Integer floor) {
 		
 		//Si on n'est pas à l'étage demandé ou si on vient d'en partir
-		// on allume le bouton
 		if (this.currentFloor != floor || this.isBetweenFloors) {
-			sender.requestACK();
-			this.requestedFloors.add(floor);
+			sender.requestACK();				// on allume le bouton
+			this.requestedFloors.add(floor);	// on enregistre l'ordre
+			if(!this.isBetweenFloors && this.requestedFloors.size() == 1) {
+				// Si on est à un étage et que c'est la 1ere commande
+				if(this.currentFloor < floor) {
+					this.mustGoUp = true;
+					this.mustGoDown = false;
+					this.motor.goUp();
+				} else if(this.currentFloor > floor) {
+					this.mustGoUp = false;
+					this.mustGoDown = true;
+					this.motor.goDown();
+				} else {
+					this.mustGoUp = false;
+					this.mustGoDown = false;
+				}
+			}
+			
 		} else {// On est déjà à l'étage, on ouvre les portes sans enregistrer l'etage
 			this.door.openDoors();
 		}
@@ -129,6 +144,7 @@ public class ElevatorControllerImpl
 
 		if(this.requestedFloors.contains(floor)) {
 			// L'étage atteint est demandé
+			this.motor.stopMove();							// On stope le moteur
 			this.requestedFloors.remove(floor);				// On enleve l'étage des listes de demande
 			this.getCabinButton(floor).requestServiced();	// On acquite les boutons cabines et etage
 			this.getFloorButton(floor).requestServiced();	
