@@ -30,7 +30,7 @@ public class ElevatorControllerImpl
 	private Integer nextRequestedFloor;
 	private Boolean mustGoUp;
 	private Boolean mustGoDown;
-	public Boolean alreadyTimeout;
+	private Boolean alreadyTimeout;
 	private ArrayList<Integer> requestedFloors;
 
 	public ElevatorControllerImpl() {
