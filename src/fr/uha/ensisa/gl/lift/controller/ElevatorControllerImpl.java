@@ -124,7 +124,7 @@ public class ElevatorControllerImpl
 		//Si on réouvre la porte après l'ordre de fermeture
 		if (this.alreadyTimeout)
 			//Si on veut changer d'étage
-			if (this.currentFloor != this.nextRequestedFloor)
+			if (this.currentFloor != floor)
 				this.timer.countdown(5000);
 			else
 				this.timer.cancel();
