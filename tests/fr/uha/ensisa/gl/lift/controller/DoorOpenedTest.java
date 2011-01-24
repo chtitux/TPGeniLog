@@ -18,7 +18,6 @@ public class DoorOpenedTest extends CabinAtFloorTestsEM {
 		timer.countdown(5000);
 		replay(timer);
 
-		sut.setState(ElevatorControllerImpl.States.Running__AtFloor);
 		sut.doorOpened(door);
 		verify(timer);
 	}

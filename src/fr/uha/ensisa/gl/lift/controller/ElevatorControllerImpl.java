@@ -34,23 +34,6 @@ public class ElevatorControllerImpl
 	private Boolean alreadyAtFloor[];
 	private Boolean alreadyTimeout;
 	
-	public enum States {
-		Running__DoorOpened__Closing,
-		Running__BetweenFloors,
-		Running__DoorOpened,
-		Running,
-		Running__AtFloor,
-		Running__Init,
-		Running__DoorOpened__LetInOut,
-		Emergency,
-		Running__DoorOpened__Init,
-		Init,
-		Running__DoorOpened__ReopeningDoors,
-		Running__DoorOpened__Final,
-		Running__Emergency
-		}
-	private States state;
-	
 	public ElevatorControllerImpl() {
 		this.floorSensors = new ArrayList<FloorSensor>();
 		this.cabinButtons = new ArrayList<Button>();
@@ -59,7 +42,6 @@ public class ElevatorControllerImpl
 		//L'ascenceur est construit à l'étage 0, portes fermées
 		this.currentFloor = 0;
 		this.requestedFloor = 0;
-		this.state = States.Running__AtFloor;
 		this.isBetweenFloors = false;
 		this.isDoorClosed = true;
 		this.mustGoDown = false;
@@ -75,8 +57,6 @@ public class ElevatorControllerImpl
 	
 	@Override
 	public void doorOpened(Door sender) {
-		this.state = States.Running__DoorOpened__LetInOut;
-
 		if (!isBetweenFloors)
 			this.getTimer().countdown(5000);
 		
@@ -85,7 +65,6 @@ public class ElevatorControllerImpl
 
 	@Override
 	public void doorClosed(Door sender) {
-		this.state = States.Running__AtFloor;
 		this.alreadyTimeout = false;
 		this.isBetweenFloors = false;
 		this.isDoorClosed = true;
@@ -153,8 +132,6 @@ public class ElevatorControllerImpl
 
 	@Override
 	public void cabinAtFloor(FloorSensor sender, Integer floor) {
-		this.state = States.Running__AtFloor;
-		
 		//On met à jour le numéro de l'étage actuel
 		this.currentFloor = floor;
 		
@@ -174,7 +151,6 @@ public class ElevatorControllerImpl
 
 	@Override
 	public void cabinLeftFloor(FloorSensor sender, Integer floor) {
-		this.state = States.Running__BetweenFloors;
 		this.isBetweenFloors = true;
 		this.currentFloor = floor;
 		
@@ -185,7 +161,6 @@ public class ElevatorControllerImpl
 	@Override
 	public void timeout(Timer timer) {
 		if (!this.alreadyTimeout) {
-			this.state = States.Running__DoorOpened__Closing;
 			this.isBetweenFloors = false;
 			this.door.closeDoors();
 		}
@@ -272,9 +247,4 @@ public class ElevatorControllerImpl
 	public void setTimer(Timer t) {
 		this.timer = t;
 	}
-	
-	public void setState(States state) {
-		this.state = state;
-	}
-
 }
