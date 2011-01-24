@@ -13,7 +13,6 @@ public class DoorClosedTest  extends CabinAtFloorTestsEM {
 	@Test
 	public void normalClose() {
 		timer.cancel();
-		motor.stopMove();
 		replay(timer);
 		replay(motor);
 		
@@ -21,6 +20,5 @@ public class DoorClosedTest  extends CabinAtFloorTestsEM {
 		sut.doorClosed(door);
 		
 		verify(timer);
-		verify(motor);
 	}
 }
