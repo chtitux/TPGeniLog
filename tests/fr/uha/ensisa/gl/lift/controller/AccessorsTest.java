@@ -1,37 +1,10 @@
 package fr.uha.ensisa.gl.lift.controller;
 
 import static org.junit.Assert.*;
-import static org.easymock.EasyMock.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import fr.ensisa.uha.ff.gl.lift.hard.Button;
-import fr.ensisa.uha.ff.gl.lift.hard.Door;
-import fr.ensisa.uha.ff.gl.lift.hard.FloorSensor;
-import fr.ensisa.uha.ff.gl.lift.hard.Motor;
-import fr.ensisa.uha.ff.gl.lift.hard.Timer;
-
-public class AccessorsTest {
-	public ElevatorControllerImpl sut = new ElevatorControllerImpl();
-	public Door door = createMock(Door.class);
-	public Button cb0 = createMock(Button.class);
-	public Button fb0 = createMock(Button.class);
-	public FloorSensor fs0 = createMock(FloorSensor.class);
-	public Button cb1 = createMock(Button.class);
-	public Button fb1 = createMock(Button.class);
-	public FloorSensor fs1 = createMock(FloorSensor.class);
-	public Button cb2 = createMock(Button.class);
-	public Button fb2 = createMock(Button.class);
-	public FloorSensor fs2 = createMock(FloorSensor.class);
-	public Motor motor = createMock(Motor.class);
-	public Timer timer = createMock(Timer.class);
-
-	@Before
-	public void createSut() {
-		sut = new ElevatorControllerImpl();
-	}
-
+public class AccessorsTest extends CabinAtFloorTestsEM {
 	@Test
 	public void doorAccessor() {
 		this.sut.setDoor(door);
