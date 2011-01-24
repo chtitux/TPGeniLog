@@ -100,28 +100,43 @@ public class ElevatorControllerImpl
 
 	@Override
 	public void request(Button sender, Integer floor) {
-		
-		//Si on n'est pas à l'étage demandé ou si on vient d'en partir
-		if (this.currentFloor != floor || this.isBetweenFloors) {
-			sender.requestACK();				// on allume le bouton
-			this.requestedFloors.add(floor);	// on enregistre l'ordre
-			if(!this.isBetweenFloors && this.requestedFloors.size() == 1) {
-				// Si on est à un étage et que c'est la 1ere commande
-				if(this.currentFloor < floor) {
-					this.mustGoUp = true;
-					this.mustGoDown = false;
-					this.motor.goUp();
-				} else if(this.currentFloor > floor) {
-					this.mustGoUp = false;
-					this.mustGoDown = true;
-					this.motor.goDown();
-				}
-			}
-			
-		} else {// On est déjà à l'étage, on ouvre les portes sans enregistrer l'etage
-			this.door.openDoors();
-		}
+		this.requestedFloors.add(floor);	// on enregistre l'ordre
 
+		if (this.isBetweenFloors) {
+			// On est entre 2 étages : on allume le bouton et on enregistre l'ordre
+			// Le calcul du sens du moteur se fera lors de la fermeture au prochain etage
+			sender.requestACK();				// on allume le bouton
+			// this.requestedFloors.add(floor);	// on enregistre l'ordre // FIXME: à virer
+
+		} else {
+			// On est à un étage donné
+			if (this.currentFloor != floor) {
+				// On n'est pas au bon étage
+				// On enregistre la demande. Si on est à l'arrêt (ie si la file contient 1 seul élément),
+				// on ferme la porte si besoin OU on envoit l'ascenceur au bon endroit
+				sender.requestACK();				// on allume le bouton
+				// this.requestedFloors.add(floor);	// on enregistre l'ordre // FIXME: à virer
+				if(this.isDoorClosed) { // Les portes sont fermées, on calcule ici
+					if(this.requestedFloors.size() == 1) {
+						// Si on est à un étage et que c'est la 1ere commande
+						if(this.currentFloor < floor) {
+							this.mustGoUp = true;
+							this.mustGoDown = false;
+							this.motor.goUp();
+						} else if(this.currentFloor > floor) {
+							this.mustGoUp = false;
+							this.mustGoDown = true;
+							this.motor.goDown();
+						}
+					} else { // les portes sont ouvertes, on les ferme
+						this.door.closeDoors();
+					}
+				}
+				
+			} else {// On est déjà à l'étage, on ouvre les portes sans enregistrer l'etage
+				this.door.openDoors();
+			}
+		}
 		
 		//Si on réouvre la porte après l'ordre de fermeture
 		if (this.alreadyTimeout)
