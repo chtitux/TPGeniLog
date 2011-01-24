@@ -115,9 +115,6 @@ public class ElevatorControllerImpl
 					this.mustGoUp = false;
 					this.mustGoDown = true;
 					this.motor.goDown();
-				} else {
-					this.mustGoUp = false;
-					this.mustGoDown = false;
 				}
 			}
 			
