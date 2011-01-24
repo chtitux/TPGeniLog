@@ -128,11 +128,12 @@ public class ElevatorControllerImpl
 							this.mustGoDown = true;
 							this.motor.goDown();
 						}
-					} else { // les portes sont ouvertes, on les ferme
-						this.door.closeDoors();
+					} else { // ce n'est pas la 1ere requete
+						
 					}
+				} else { // les portes sont ouvertes, on les ferme
+					this.door.closeDoors();
 				}
-				
 			} else {// On est déjà à l'étage, on ouvre les portes sans enregistrer l'etage
 				this.door.openDoors();
 			}
