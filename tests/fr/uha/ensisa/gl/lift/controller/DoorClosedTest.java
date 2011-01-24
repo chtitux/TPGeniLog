@@ -16,7 +16,6 @@ public class DoorClosedTest  extends CabinAtFloorTestsEM {
 		replay(timer);
 		replay(motor);
 		
-		sut.setState(ElevatorControllerImpl.States.Running__AtFloor);
 		sut.doorClosed(door);
 		
 		verify(timer);
