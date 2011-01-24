@@ -137,6 +137,7 @@ public class AdapterImpl implements AdapterInterface {
 
 	@Override
 	public void ElevatorControllertimeout(ElevatorController ltd_receiverInstance) throws Exception {
+		((Bouchon) this.sut.getTimer()).setMessage(Messages.none);
 		this.sut.timeout(this.sut.getTimer());
 	}
 
