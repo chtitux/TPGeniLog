@@ -148,6 +148,7 @@ public class AdapterImpl implements AdapterInterface {
 	
 	private Bouchon getObjectFromActor(Actor sender)	{
 		Bouchon actor = null;
+
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.cb0)
 			actor = (Bouchon) this.cb0;
 		if (sender == fr.uha.ensisa.gl.lift.controller.generatedTests.ElevatorController.InstancesDefinition.Actor.fb0)
