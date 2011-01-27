@@ -3,6 +3,7 @@ package fr.uha.ensisa.gl.lift.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 
 import fr.ensisa.uha.ff.gl.lift.hard.Button;
 import fr.ensisa.uha.ff.gl.lift.hard.ButtonListener;
@@ -89,7 +90,9 @@ public class ElevatorControllerImpl
 
 	@Override
 	public void request(Button sender, Integer floor) {
-		this.requestedFloors.add(floor);	// on enregistre l'ordre
+		if(!this.requestedFloors.contains(floor) || (this.currentFloor == floor && this.isBetweenFloors == false))	// si une demande n'est pas déjà faite
+			this.requestedFloors.add(floor);		// on enregistre l'ordre
+		
 
 		if (this.isBetweenFloors) {
 			// On est entre 2 étages : on allume le bouton et on enregistre l'ordre
@@ -134,39 +137,53 @@ public class ElevatorControllerImpl
 	public void computeActionMotor() {
 		// Tri
 		Integer temp;
-		if(this.requestedFloors.size() > 1) {
-			if(this.mustGoUp && this.currentFloor != 3) { // l'ascenceur est en train de monter
-				Collections.sort(this.requestedFloors);	// On trie les étages dans l'ordre croissant
-				// Tant que l'étage prochain est inférieur au prochain étage dans l'immeuble, on le met après tous les autres
-				while(this.requestedFloors.get(0) < this.currentFloor) {
-					temp = this.requestedFloors.get(0);
-					this.requestedFloors.add(temp);
-					this.requestedFloors.remove(0);
-				}
-				
-			} else if(this.mustGoDown && this.currentFloor != 0) { // L'ascenceur est en train de descendre
-				Collections.sort(this.requestedFloors, Collections.reverseOrder()); // On trie dans l'ordre décroissant (4,3,2,1 par ex)
-				// Tant que l'étage prochain est supérieur au prochain étage dans l'immeuble, on le met après tous les autres
-				// Ex : on est à l'étage 3, dont on veut 2, 1, 4, 3
-				while(this.requestedFloors.get(0) > this.currentFloor) {
-					temp = this.requestedFloors.get(0);
-					this.requestedFloors.add(temp);
-					this.requestedFloors.remove(0);
-				}
-				
+		System.out.print("étages demandés: ");
+		for(int i = 0; i < this.requestedFloors.size(); i++) {
+			System.out.print(this.requestedFloors.get(i)+", ");
+			
+		}
+		
+		if(this.requestedFloors.size() == 0) return; // si pas d'etage à servir, ça ne sert à rien
+		
+		if(this.mustGoDown) {
+			// l'ascenceur était en train de descendre
+			
+			if(this.getMinRequestedFloor() < this.currentFloor) {
+				// S'il reste un étage plus bas, on continue à descendre
+				this.mustGoUp = false;
+				this.mustGoDown = true;
+				this.motor.goDown();
+			} else { // sinon, le plus bas étage demandé est plus haut que l'actuel, on monte
+				this.mustGoUp = true;
+				this.mustGoDown = false;
+				this.motor.goUp();
+			}
+		} else {
+			// l'ascenceur était en train de monter
+			
+			if(this.getMaxRequestedFloor() > this.currentFloor) {
+				// S'il reste un étage plus bas, on continue à monter
+				this.mustGoUp = true;
+				this.mustGoDown = false;
+				this.motor.goUp();
+			} else { // sinon, le plus haut étage demandé est plus bas que l'actuel, on descend
+				this.mustGoUp = false;
+				this.mustGoDown = true;
+				this.motor.goDown();
 			}
 		}
-		// Si on est à un étage et que c'est la 1ere commande
-		Integer floor = this.requestedFloors.get(0);
-		if(this.currentFloor < floor) {
-			this.mustGoUp = true;
-			this.mustGoDown = false;
-			this.motor.goUp();
-		} else if(this.currentFloor > floor) {
-			this.mustGoUp = false;
-			this.mustGoDown = true;
-			this.motor.goDown();
-		}
+		
+		System.out.print("up: "+this.mustGoUp+", down:"+this.mustGoDown);
+		System.out.println();
+
+	}
+	
+	private Integer getMaxRequestedFloor() {
+		return Collections.max(this.requestedFloors);
+	}
+	
+	private Integer getMinRequestedFloor() {
+		return Collections.min(this.requestedFloors);
 	}
 
 	@Override
@@ -193,7 +210,7 @@ public class ElevatorControllerImpl
 		
 		
 		// Etat d'urgence : on stoppe
-		if (this.requestedFloors.contains(floor) && this.requestedFloors.get(0) == floor)
+		if (this.requestedFloors.contains(floor))
 			this.motor.stopMove();
 	}
 
