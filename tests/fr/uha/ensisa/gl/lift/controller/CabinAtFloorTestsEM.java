@@ -29,6 +29,10 @@ public class CabinAtFloorTestsEM {
 	public Button cb2 = createMock(Button.class);
 	public Button fb2 = createMock(Button.class);
 	public FloorSensor fs2 = createMock(FloorSensor.class);
+	// Étage 3
+	public Button cb3 = createMock(Button.class);
+	public Button fb3 = createMock(Button.class);
+	public FloorSensor fs3 = createMock(FloorSensor.class);
 	
 	
 	@Before public void createSut() {
@@ -48,6 +52,10 @@ public class CabinAtFloorTestsEM {
 		this.sut.setCabinButton(2, cb2);
 		this.sut.setFloorButton(2, fb2);
 		this.sut.setFloorSensor(2, fs2);
+		// Etage 3
+		this.sut.setCabinButton(3, cb3);
+		this.sut.setFloorButton(3, fb3);
+		this.sut.setFloorSensor(3, fs3);
 		
 		
 		reset(door);
@@ -62,6 +70,9 @@ public class CabinAtFloorTestsEM {
 		reset(cb2);
 		reset(fb2);
 		reset(fs2);
+		reset(cb3);
+		reset(fb3);
+		reset(fs3);
 	}
 
 }
