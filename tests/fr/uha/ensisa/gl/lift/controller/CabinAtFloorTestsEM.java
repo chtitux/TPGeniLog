@@ -1,15 +1,13 @@
 package fr.uha.ensisa.gl.lift.controller;
 
 import org.junit.Before;
-import org.junit.Test;
-
 import fr.ensisa.uha.ff.gl.lift.hard.Button;
 import fr.ensisa.uha.ff.gl.lift.hard.Door;
 import fr.ensisa.uha.ff.gl.lift.hard.FloorSensor;
 import fr.ensisa.uha.ff.gl.lift.hard.Motor;
 import fr.ensisa.uha.ff.gl.lift.hard.Timer;
 import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+
 
 public class CabinAtFloorTestsEM {
 	public ElevatorControllerImpl sut;

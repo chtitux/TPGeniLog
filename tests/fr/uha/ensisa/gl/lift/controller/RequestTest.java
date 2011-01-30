@@ -1,9 +1,7 @@
 package fr.uha.ensisa.gl.lift.controller;
 
 import static org.easymock.EasyMock.*;
-
 import org.junit.Test;
-
 import fr.ensisa.uha.ff.gl.lift.hard.QueryableMotor.MotorStatus;
 
 

@@ -1,8 +1,8 @@
 package fr.uha.ensisa.gl.lift.controller;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
+
 
 public class AccessorsTest extends CabinAtFloorTestsEM {
 	@Test
