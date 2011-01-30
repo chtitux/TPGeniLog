@@ -179,6 +179,10 @@ public class ElevatorControllerImpl
 				this.mustGoUp = true;
 				this.mustGoDown = false;
 				this.motor.goUp();
+			} else { // sinon, le plus haut étage demandé est plus bas que l'actuel, on descend
+				this.mustGoUp = false;
+				this.mustGoDown = true;
+				this.motor.goDown();
 			}
 		} else {
 			// l'ascenceur était en train de monter
